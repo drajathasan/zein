@@ -60,7 +60,7 @@ $Html
 /** End Head **/
 
 // Set up view
-$View = Zein\View::render('home', [], true);
+$View = Zein\View::render('mainlayout', [], true);
 
 // Write Html Body
 $Html->write($View);

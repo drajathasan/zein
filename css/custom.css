@@ -1,3 +1,7 @@
+body {
+    background-color: #ededed;
+}
+
 .nopad {
     padding: 0;
 }
@@ -30,6 +34,75 @@
     background-color: #f1f1f1;
 }
 
-.zein-nav {
+#zein-nav {
     width: 16%;
+    top: 0;
+    background-color: white;
+}
+
+#zein-header > .header-content {
+    z-index: 1;
+    display: inline-flex;
+    position: relative;
+    left: 17%;
+    width: 80%;
+}
+
+.search-menu {
+    background-image: url(../images/ios7-search.png);
+    background-repeat: no-repeat;
+    background-position: 93% center;
+    background-size: 22px;
+}
+
+.search-menu > input {
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.search-menu > input:focus {
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.mainContentDashboard {
+    margin-left: 18% !important;
+    margin-right: 2%;
+    top: -22%;
+}
+
+.inner-stat {
+    z-index: 0;
+    display: inline-flex;
+    position: relative;
+    left: 18%;
+    width: 80%;
+}
+
+.zein-card-title {
+    font-size: 11.2pt;
+    text-transform: uppercase;
+}
+
+.zein-card-text {
+    color: #404040;
+}
+
+.zein-photo-profile {
+    width: 35px;
+}
+
+.zein-username {
+    font-size: 12pt;
+    margin-left: 8px;
+}
+
+.zein-cursor-pointer {
+    cursor: pointer;
+}
+
+.zein-search-input {
+    width: 88%;
 }

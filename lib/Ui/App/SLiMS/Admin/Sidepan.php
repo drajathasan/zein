@@ -16,8 +16,8 @@ class Sidepan
     {
         $List = '';
         foreach ($_SESSION['priv'] as $Module => $Priv) {
-            $Module = ucwords(str_replace('_', ' ', $Module));
-            if ($Priv['r'] && $Priv['w']) $List .= '<li><a href="'. AWB .'index.php?module=' . $Module . '"  class="d-block w-full">' . __($Module) . '</a></li>';
+            $Module = __(ucwords(str_replace('_', ' ', $Module)));
+            if ($Priv['r'] && $Priv['w']) $List .= '<li><a href="'. AWB .'index.php?module=' . $Module . '"  class="d-block w-full">' . $Module . '</a></li>';
         }
         return $List;
     }
@@ -25,14 +25,13 @@ class Sidepan
     public static function render()
     {
         $List = self::moduleList();
-        $Url = AWB . 'modules/bibliography/index.php';
         $HTML = <<<HTML
             <div class="sidepan flex">
                 <div class="h-screen">
                     <div class="w-100 inst-logo">
 
                     </div>
-                    <ul class="overflow-auto h-screen">
+                    <ul class="overflow-auto">
                         {$List}
                     </ul>
                 </div>
