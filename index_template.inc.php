@@ -35,6 +35,7 @@ $Html
     ->setLink(['href' => JWB . 'chosen/chosen.css?' . date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => JWB . 'toastr/toastr.min.css?' . date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => JWB . 'jquery.imgareaselect/css/imgareaselect-default.css', 'rel' => 'stylesheet', 'type' => 'text/css'])
+    ->setLink(['href' => AWB . str_replace('style.css', 'css/materialdesignicons.min.css', $sysconf['admin_template']['css']), 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => $sysconf['admin_template']['css'].'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => str_replace('style.css', 'css/custom.css', $sysconf['admin_template']['css']) .'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css']);
 

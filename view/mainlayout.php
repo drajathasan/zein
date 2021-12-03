@@ -16,10 +16,10 @@ defined('INDEX_AUTH') or die('No direct access!');
 
 // Statistic card
 $CardContent = [
-    ['label' => __('Total of Collections'), 'icon' => '', 'sublabel' => __('Title')],
-    ['label' => __('Total of Items'), 'icon' => '', 'sublabel' => __('Item')],
-    ['label' => __('Lent'), 'icon' => '', 'sublabel' => __('Item')],
-    ['label' => __('Available'), 'icon' => '', 'sublabel' => __('Item')]
+    ['label' => __('Total of Collections'), 'icon' => Element::create('div', ['class' => 'rounded-circle', 'data-stat' => 'icon-collection'],  Element::create('i', ['class' => 'zein-stat-icon mdi mdi-book'])), 'sublabel' => __('Title')],
+    ['label' => __('Total of Items'), 'icon' => Element::create('div', ['class' => 'rounded-circle', 'data-stat' => 'icon-item'],  Element::create('i', ['class' => 'zein-stat-icon mdi mdi-content-copy'])), 'sublabel' => __('Item')],
+    ['label' => __('Lent'), 'icon' => Element::create('div', ['class' => 'rounded-circle', 'data-stat' => 'icon-lent'],  Element::create('i', ['class' => 'zein-stat-icon mdi mdi-arrow-right-circle'])), 'sublabel' => __('Item')],
+    ['label' => __('Available'), 'icon' => Element::create('div', ['class' => 'rounded-circle', 'data-stat' => 'icon-available'],  Element::create('i', ['class' => 'zein-stat-icon mdi mdi-checkbox-marked-circle'])), 'sublabel' => __('Item')]
 ];
 
 // Output

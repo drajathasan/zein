@@ -19,6 +19,7 @@ class Card
             extract($Card);
             $CardContent .= <<<HTML
                 <div class="card">
+                    {$icon}
                     <div class="card-body">
                         <span class="card-title zein-card-title">{$label}</span>
                         <h3 class="card-text zein-card-text font-weight-bold">0,0</h3>

@@ -13,9 +13,13 @@ body {
 
 .sidepan > div > ul > li {
     padding: 0.8em;
-    font-size: 10pt;
-    font-weight: bold;
+    font-size: .975rem;
+    font-weight: 500;
     color: #3c3c3c;
+}
+
+.sidepan > div > ul > li > a > i {
+    font-size: 1.3rem;
 }
 
 .active-li {
@@ -27,7 +31,7 @@ body {
 }
 
 .inst-logo {
-    height: 10%;
+    min-height: 10%;
 }
 
 .content-area {
@@ -70,7 +74,7 @@ body {
 .mainContentDashboard {
     margin-left: 18% !important;
     margin-right: 2%;
-    top: -22%;
+    top: -28%;
 }
 
 .inner-stat {
@@ -105,4 +109,52 @@ body {
 
 .zein-search-input {
     width: 88%;
+}
+
+.zein-side-nav {
+    max-height: 80%;
+}
+
+.dropdown-toggle::after {
+    color: white
+}
+
+.zein-stat-icon {
+    font-size: 25pt;
+    padding: 15px;
+    margin: 0;
+    color: white
+}
+
+.zein-slims-logo {
+    width: 35px;
+    margin-left: 25px;
+    margin-right: 10px;
+}
+
+svg.zein-slims-logo {
+    fill: #007bff;
+    align-items: center;
+    position: absolute;
+    top: 15px;
+}
+
+div[data-stat*="icon-"] {
+    position: absolute; right: 15px;top: 25px;
+}
+
+div[data-stat="icon-collection"] {
+    background: linear-gradient(87deg,#2dce89 0,#2dcecc 100%)!important;
+}
+
+div[data-stat="icon-item"] {
+    background: linear-gradient(87deg,#ffbf00 0,#ff7e41 100%)!important;
+}
+
+div[data-stat="icon-lent"] {
+    background: linear-gradient(109deg,#ff9e9e 0,#ff0000 100%)!important;
+}
+
+div[data-stat="icon-available"] {
+    background: linear-gradient(109deg,#59c9ff 0,#009fdf 100%)!important;
 }

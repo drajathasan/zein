@@ -32,12 +32,7 @@
 
         if (count($Attributes))
         {
-            $HtmlAttribute = array_map(function($value, $key) {
-                return self::free(trim($key)) . '="' . self::noquote(trim($value)) . '"';
-            }, array_values($Attributes), array_keys($Attributes));
-
-            $El .= ' ' . trim(implode(' ', $HtmlAttribute));
-            
+            $El .= ' ' . self::arrayAttribute($Attributes);
         }
 
         $El .= (self::$Close) ? '>' . $Slot . '</' . self::free($Tag) . '>' : '/>' ;
@@ -47,11 +42,18 @@
 
      public static function free(string $Element)
      {
-        return preg_replace('/[^A-Za-z]/i', '', strtolower($Element));
+        return preg_replace('/[^A-Za-z\-]/i', '', strtolower($Element));
      }
 
      public static function noquote(string $Value)
      {
         return str_replace(['"','`','\''], '', $Value);
+     }
+
+     public static function arrayAttribute(array $Attributes)
+     {
+        return trim(implode(' ', array_map(function($value, $key) {
+            return self::free(trim($key)) . '="' . self::noquote(trim($value)) . '"';
+        }, array_values($Attributes), array_keys($Attributes))));
      }
  }
