@@ -12,18 +12,40 @@ body {
 }
 
 .sidepan > div > ul > li {
-    padding: 0.8em;
-    font-size: .975rem;
-    font-weight: 500;
+    padding: 0.1em 0.8em 0.1em 0.8em;
+    font-size: .875rem;
+    font-weight: 600;
     color: #3c3c3c;
+}
+
+.sidepan > div > ul > li:hover > a {
+    color: white
+}
+
+.sidepan > div > ul > li:hover {
+    background-color: #007bff;
+    border-top-left-radius: 35px;
+    border-bottom-left-radius: 35px;
 }
 
 .sidepan > div > ul > li > a > i {
     font-size: 1.3rem;
 }
 
-.active-li {
-    background-color: #f1fbff;
+ul.zein-side-nav > li > a {
+    color: rgba(39, 39, 39, 0.822);
+}
+
+li.active {
+    background-color: #007bff;
+    border-top-left-radius: 35px;
+    border-bottom-left-radius: 35px;
+}
+
+
+li.active > a {
+    color: white !important;
+    font-weight: bold;
 }
 
 .h-screen {
@@ -72,9 +94,20 @@ body {
 }
 
 .mainContentDashboard {
-    margin-left: 18% !important;
-    margin-right: 2%;
-    top: -28%;
+    margin-left: 19% !important;
+    margin-right: 3%;
+}
+
+@media screen and (min-width: 1366px) {
+    .mainContentDashboard {
+        top: -24vh;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .mainContentDashboard {
+        top: -34vh;
+    }
 }
 
 .inner-stat {
@@ -86,8 +119,9 @@ body {
 }
 
 .zein-card-title {
-    font-size: 11.2pt;
+    font-size: 10pt;
     text-transform: uppercase;
+    font-weight: 500;
 }
 
 .zein-card-text {
@@ -133,10 +167,15 @@ body {
 }
 
 svg.zein-slims-logo {
-    fill: #007bff;
+    fill: #999999;
     align-items: center;
     position: absolute;
     top: 15px;
+}
+
+.submenu {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 div[data-stat*="icon-"] {

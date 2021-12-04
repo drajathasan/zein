@@ -56,13 +56,16 @@ $Html
     ->setJs(['type' => 'text/javascript', 'src' => JWB . 'scanner.js'])
     ->setJs(['type' => 'text/javascript', 'src' => SWB . 'js/popper.min.js'])
     ->setJs(['type' => 'text/javascript', 'src' => SWB . 'js/bootstrap.min.js'])
-    ->setJs(['type' => 'text/javascript', 'src' => JWB . 'toastr/toastr.min.js']);
+    ->setJs(['type' => 'text/javascript', 'src' => JWB . 'toastr/toastr.min.js'])
+    ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/app.js'], '', 'Bottom');
 
 /** End Head **/
 
 // Set up view
-$View = Zein\View::render('mainlayout', [], true);
+$Param = [];
+if (isset($_GET['mod']) && !empty($_GET['mod'])) $Param = ['maincontent' => preg_replace('/(.*)(\s+)(?=<script)/i', '', $sysconf['page_footer'])];
+
+$View = Zein\View::render('mainlayout', $Param, true);
 
 // Write Html Body
 $Html->write($View);
-

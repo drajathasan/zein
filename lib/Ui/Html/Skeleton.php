@@ -75,8 +75,14 @@ class Skeleton
         $Head = Element::create('head', [], $innerHead);
         // end head
         
+        // Bottom JS
+        $BottomJS = '';
+        foreach ($this->Bottom['js']??[] as $Js) {
+            $BottomJS .= $Js;
+        }
+
         // Body
-        $Body = Element::create('body', $Attribute, $Content);
+        $Body = Element::create('body', $Attribute, $Content . $BottomJS);
         // end body
 
         echo Element::create('html', ['lang' => $this->Conf['default_lang']], $Head . $Body);

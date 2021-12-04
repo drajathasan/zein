@@ -14,10 +14,10 @@ class Card
 {
     public static function deck(array $Cards)
     {
-        $CardContent = '';
+        $CardSlot = [];
         foreach ($Cards as $Card) {
             extract($Card);
-            $CardContent .= <<<HTML
+            $CardSlot['content'][] = ['class' => 'col-3', 'slot' => <<<HTML
                 <div class="card">
                     {$icon}
                     <div class="card-body">
@@ -26,9 +26,9 @@ class Card
                         <p class="card-text"><small class="text-muted">{$sublabel}</small></p>
                     </div>
                 </div>
-            HTML;
+            HTML];
         }
 
-        return '<div class="card-deck w-100">' . $CardContent . '</div>';
+        return Container::init('fluid')->row('align-items-center')->col($CardSlot)->create();
     }
 }

@@ -27,15 +27,18 @@ ob_start();
 
 echo Element::create('header', ['id' => 'zein-header', 'class' => 'py-3 px-2 bg-primary'], Header::render());
 // Statistic
-echo Element::create('div', ['class' => 'w-100 h-50 dashboard-stat bg-primary'], 
+if (!isset($_GET['mod'])):
+    echo Element::create('div', ['class' => 'w-100 h-50 dashboard-stat bg-primary'], 
                       Element::create('div', ['class' => 'mt-3 inner-stat'], 
                       Card::deck($CardContent)));
+endif;
 // Navbar
 echo Element::create('nav', ['id' => 'zein-nav ', 'class' => 'position-fixed'], Sidepan::render());
 // Loader
 echo Element::create('div', ['class' => 'loader d-none', 'style' => 'display: none']);
 // Main Content
-echo Element::create('div', ['id' => 'mainContent', 'class' => 'mainContentDashboard rounded']);
+$ContentClass = isset($_GET['mod']) ? 'rounded' : 'mainContentDashboard rounded';
+echo Element::create('div', ['id' => 'mainContent', 'class' => $ContentClass], $maincontent??'');
 
 // Get buffer
 echo ob_get_clean();
