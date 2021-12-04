@@ -39,10 +39,18 @@ class Sidepan
     private static function submenu(string $Module)
     {
         $ModuleTranslate = __(ucwords(str_replace('_', ' ', $Module)));
-        $List = Element::create('li', ['class' => 'active'], 
+
+        // Other Module
+        $List = Element::create('li', ['class' => 'notAJAX'], 
+                    Element::create('a', ['href' => $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'], 'class' => 'd-block w-full'], 
+                        Element::create('i', ['class' => (self::ICON['*'])]) . 'Modul Lain'));
+        
+        // Current module name
+        $List .= Element::create('li', ['class' => 'active'], 
                     Element::create('a', ['href' => $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'], 'class' => 'd-block w-full'], 
                         Element::create('i', ['class' => (self::ICON[$Module]??self::ICON['*'])]) . $ModuleTranslate));
 
+        // Include submenu
         if (file_exists($Submenu = MDLBS . $Module . '/submenu.php'))
         {
             $dbs = \SLiMS\DB::getInstance('mysqli');
@@ -66,12 +74,16 @@ class Sidepan
     public static function render()
     {
         global $sysconf;
-        $List = self::moduleList();
+        
         $Class = '';
         if (isset($_GET['mod']))
         {
             $List = self::submenu($_GET['mod']);
             $Class = 'sidepan-at-module';
+        }
+        else
+        {
+            $List = self::moduleList();
         }
 
         $Logo = Logo::render(['class' => 'zein-slims-logo fill-current text-dark'], $sysconf);

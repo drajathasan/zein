@@ -14,6 +14,6 @@ class Dashboard
 {
     public static function render()
     {
-        
+        return '<h1>Harno</h1>';
     }
 }

@@ -3,7 +3,7 @@
  * @author Drajat Hasan
  * @email drajathasan20@gmail.com
  * @create date 2021-12-01 20:18:49
- * @modify date 2021-12-01 20:18:49
+ * @modify date 2021-12-05 00:49:06
  * @license MIT
  * @desc [description]
  */
@@ -36,6 +36,7 @@ class Skeleton
 
     public function setJs(array $Attribute, string $Slot = '', string $Position = 'Head')
     {
+        // Mutating
         $Attribute['src'] = $Attribute['src'] . '?v=' . date('this');
         $this->$Position['js'][] = Element::create('script', $Attribute, $Slot);
 
@@ -56,11 +57,6 @@ class Skeleton
         $this->Head['style'][] = Element::create('style', $Attribute, $Slot);
 
         return $this;
-    }
-
-    public function setBootstrapCss(array $Filename)
-    {
-        
     }
 
     public function write(string $Content, array $Attribute = [])
@@ -85,6 +81,7 @@ class Skeleton
         $Body = Element::create('body', $Attribute, $Content . $BottomJS);
         // end body
 
+        // Write HTML
         echo Element::create('html', ['lang' => $this->Conf['default_lang']], $Head . $Body);
     }
 

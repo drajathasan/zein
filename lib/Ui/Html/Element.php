@@ -3,7 +3,7 @@
  * @author Drajat Hasan
  * @email drajathasan20@gmail.com
  * @create date 2021-12-01 17:35:47
- * @modify date 2021-12-01 17:35:47
+ * @modify date 2021-12-05 00:47:11
  * @license MIT
  * @desc [description]
  */
@@ -12,7 +12,7 @@
 
  class Element
  {
-     public static $HTMLTag = [
+     public const HTMLTag = [
      'a','abbr','acronym','address','applet',
      'area','article','aside','audio','b','base','basefont','bdi','bdo','big','blockquote','body',
      'br','button','canvas','caption','center','cite','code','col','colgroup','data','datalist','dd','del','details','dfn',
@@ -26,7 +26,7 @@
 
      public static function create(string $Tag, array $Attributes = [], string $Slot = '') :string
      {
-        if (!in_array($Tag, self::$HTMLTag)) die('Tag is not valid HTML tag');
+        if (!in_array($Tag, self::HTMLTag)) die('Tag is not valid HTML tag');
 
         $El = '<' . self::free($Tag);
 

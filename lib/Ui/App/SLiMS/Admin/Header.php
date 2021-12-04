@@ -46,14 +46,14 @@ class Header
             <div class="header-content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm">
+                        <div class="col-xs-12 col-md-6 col-lg-5 col-xl-5">
                             <div class="search-menu p-2 w-75 rounded-pill bg-white">
                                 <input class="pl-3 zein-search-input" placeholder="Search"/>
                             </div>
                         </div>
                         <div class="col-sm">
                         </div>
-                        <div class="col-xs zein-cursor-pointer dropdown">
+                        <div class="col-xs-12 col-md-6 col-lg-2 col-xl-2 zein-cursor-pointer dropdown">
                             <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
                                 <img src="{$PhotoUrl}" class="zein-photo-profile rounded-circle">
                                 <span class="text-white zein-username font-weight-bold">{$UserName}</span>

@@ -14,13 +14,26 @@ use Zein\Ui\Html\Element;
 
 class Logo
 {
-    public static function render(array $Attribute = [], array $Conf)
+    public static function loadFromConf(array $Conf, array $Attribute, string $Type = 'el')
     {
         if (isset($Conf['logo_image']) && !empty($Conf['logo_image']) && file_exists(IMGBS.'default/'.$Conf['logo_image']))
         {
+            // Set source url
+            $Src = SWB . 'images/default/' . $Conf['logo_image'] . '?v=' . date('this');
+            // if request is url
+            if ($Type !== 'el') return $Src;
+            // Mutating
             $Attribute['class'] = $Attribute['class'] . ' mt-3';
-            return Element::create('img', array_merge(['src' => SWB . 'images/default/'.$Conf['logo_image']], $Attribute));
+
+            return Element::create('img', array_merge(['src' => $Src], $Attribute));
         }
+
+        return;
+    }
+
+    public static function render(array $Attribute = [], array $Conf)
+    {
+        if (!empty($Img = self::loadFromConf($Conf, $Attribute))) return $Img;
 
         // set svg
         $Attribute = trim(Element::arrayAttribute($Attribute)??'');

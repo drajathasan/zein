@@ -5,7 +5,7 @@
  * @create date 2021-12-02 23:10:45
  * @modify date 2021-12-02 23:10:45
  * @license GPLv3
- * @desc [description]
+ * @desc [Main layout]
  */
 
 use Zein\Ui\Html\Element;
@@ -22,10 +22,12 @@ $CardContent = [
     ['label' => __('Available'), 'icon' => Element::create('div', ['class' => 'rounded-circle', 'data-stat' => 'icon-available'],  Element::create('i', ['class' => 'zein-stat-icon mdi mdi-checkbox-marked-circle'])), 'sublabel' => __('Item')]
 ];
 
-// Output
+// Output area
 ob_start();
 
+// Header
 echo Element::create('header', ['id' => 'zein-header', 'class' => 'py-3 px-2 bg-primary'], Header::render());
+
 // Statistic
 if (!isset($_GET['mod'])):
     echo Element::create('div', ['class' => 'w-100 h-50 dashboard-stat bg-primary'], 

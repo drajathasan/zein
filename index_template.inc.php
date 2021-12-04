@@ -3,16 +3,19 @@
  * @author Drajat Hasan
  * @email drajathasan20@gmail.com
  * @create date 2021-12-02 08:27:25
- * @modify date 2021-12-02 08:27:25
+ * @modify date 2021-12-05 00:44:06
  * @license GPLv3
- * @desc [description]
+ * @desc Main Template File
  */
+
+use Zein\Ui\Html\Skeleton;
+use Zein\Ui\App\SLiMS\Admin\{Logo,Dashboard};
 
 include __DIR__ . '/lib/autoload.php';
 require __DIR__ . '/lib/helper.php';
 
 // Html Skeleton
-$Html = Zein\Ui\Html\Skeleton::getInstance($sysconf);
+$Html = Skeleton::getInstance($sysconf);
 
 /**  Head Element **/
 // Meta
@@ -25,10 +28,13 @@ $Html
     ->setMeta(['http-equiv' => 'Cache-Control', 'content' => 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0'])
     ->setMeta(['http-equiv' => 'Expires', 'content' => 'Sat, 26 Jul 1997 05:00:00 GMT']);
 
+// Fav ico
+$Logo = Logo::loadFromConf($sysconf, [], 'src');
+
 // Css
 $Html
-    ->setLink(['rel' => 'icon', 'href' => SWB . 'webicon.ico', 'type' => 'image/x-icon'])
-    ->setLink(['rel' => 'shortcut icon', 'href' => SWB . 'webicon.ico', 'type' => 'image/x-icon'])
+    ->setLink(['rel' => 'icon', 'href' => $Logo??SWB . 'webicon.ico', 'type' => 'image/x-icon'])
+    ->setLink(['rel' => 'shortcut icon', 'href' => $Logo??SWB . 'webicon.ico', 'type' => 'image/x-icon'])
     ->setLink(['href' => SWB . 'css/bootstrap.min.css?' . date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => SWB . 'css/core.css?' . date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => JWB . 'colorbox/colorbox.css?' . date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
@@ -64,8 +70,9 @@ $Html
 /** End Head **/
 
 // Set up view
-$Param = [];
+$Param = ['maincontent' => Dashboard::render()];
 if (isset($_GET['mod']) && !empty($_GET['mod'])) $Param = ['maincontent' => preg_replace('/(.*)(\s+)(?=<script)/i', '', $sysconf['page_footer'])];
+
 
 $View = Zein\View::render('mainlayout', $Param, true);
 

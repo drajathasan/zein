@@ -48,6 +48,34 @@ ul.zein-side-nav > li > a {
     color: rgba(39, 39, 39, 0.822);
 }
 
+ul.zein-side-nav > li:hover {
+    background-color: #007bff;
+    border-top-left-radius: 35px;
+    border-bottom-left-radius: 35px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    transition: all .55s ease;
+    will-change: transform;
+}
+
+ul.zein-side-nav > li:hover > a {
+    color:white;
+}
+
+div.dropdown-menu {
+    transition: all 0.5s;
+    overflow: hidden;
+    transform-origin: top center;
+    transform: scale(1,0);
+}
+
+div.dropdown-menu .show {
+    transition: all 0.5s;
+    overflow: hidden;
+    transform-origin: top center;
+    transform: scale(1,0);
+}
+
 li.active {
     background-color: #007bff;
     border-top-left-radius: 35px;
@@ -117,6 +145,7 @@ ul.zein-side-nav > li > a > i {
 .mainContentDashboard {
     margin-left: 19% !important;
     margin-right: 3%;
+    border-radius: 20px !important;
 }
 
 @media screen and (min-width: 1366px) {
@@ -239,10 +268,6 @@ div[data-stat="icon-available"] {
     background: linear-gradient(109deg,#59c9ff 0,#009fdf 100%)!important;
 }
 
-.btn {
-    border-radius: 25px !important;
-}
-
 .cursor-pointer {
     cursor: pointer;
 }
@@ -251,4 +276,8 @@ div[data-stat="icon-available"] {
     font-size: 10pt;
     color: #000000;
     font-weight: 500;
+}
+
+.card {
+    border-radius: 20px !important;
 }
