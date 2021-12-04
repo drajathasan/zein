@@ -36,7 +36,7 @@ class Sidepan
         return $List;
     }
 
-    public static function submenu(string $Module)
+    private static function submenu(string $Module)
     {
         $ModuleTranslate = __(ucwords(str_replace('_', ' ', $Module)));
         $List = Element::create('li', ['class' => 'active'], 
@@ -45,7 +45,9 @@ class Sidepan
 
         if (file_exists($Submenu = MDLBS . $Module . '/submenu.php'))
         {
+            $dbs = \SLiMS\DB::getInstance('mysqli');
             include $Submenu;
+            $ActiveIndex = 'active';
             foreach ($menu as $ModuleMenu) {
                 if ($ModuleMenu[0] === 'Header')
                 {
@@ -53,7 +55,8 @@ class Sidepan
                 }
                 else
                 {
-                    $List .= Element::create('li', ['class' => 'submenu'], Element::create('a', ['href' => $ModuleMenu[1], 'class' => 'd-block'], $ModuleMenu[0]));
+                    $List .= Element::create('li', ['class' => 'submenu ' . $ActiveIndex], Element::create('a', ['href' => $ModuleMenu[1], 'class' => 'd-block'], $ModuleMenu[0]));
+                    $ActiveIndex = '';
                 }
             }
         }
@@ -63,13 +66,20 @@ class Sidepan
     public static function render()
     {
         global $sysconf;
-        $List = isset($_GET['mod']) ? self::submenu($_GET['mod']) : self::moduleList();
-        $Logo = Logo::render(['class' => 'zein-slims-logo fill-current text-dark']);
+        $List = self::moduleList();
+        $Class = '';
+        if (isset($_GET['mod']))
+        {
+            $List = self::submenu($_GET['mod']);
+            $Class = 'sidepan-at-module';
+        }
+
+        $Logo = Logo::render(['class' => 'zein-slims-logo fill-current text-dark'], $sysconf);
         $LibraryName = $sysconf['library_name'];
         $HTML = <<<HTML
-            <div class="sidepan flex">
+            <div class="sidepan flex {$Class}">
                 <div class="h-screen">
-                    <div class="w-100 inst-logo d-flex justify-content-star">
+                    <div onclick="window.location = 'index.php'" class="w-100 inst-logo d-flex justify-content-star cursor-pointer">
                         <div class="w-25 mr-2">
                             {$Logo}
                         </div>
@@ -77,7 +87,7 @@ class Sidepan
                             <h6 class="pl-2 mt-4 text-uppercase">{$LibraryName}</h5>
                         </div>
                     </div>
-                    <ul class="overflow-auto mt-3 zein-side-nav">
+                    <ul class="mt-3 zein-side-nav">
                         {$List}
                     </ul>
                 </div>

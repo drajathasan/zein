@@ -39,6 +39,8 @@ echo Element::create('div', ['class' => 'loader d-none', 'style' => 'display: no
 // Main Content
 $ContentClass = isset($_GET['mod']) ? 'rounded' : 'mainContentDashboard rounded';
 echo Element::create('div', ['id' => 'mainContent', 'class' => $ContentClass], $maincontent??'');
+// Iframe
+echo Element::create('iframe', ['name' => 'blindSubmit', 'style' => 'display: none; visibility: hidden; width: 0; height: 0;']);
 
 // Get buffer
 echo ob_get_clean();

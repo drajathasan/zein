@@ -14,9 +14,17 @@ use Zein\Ui\Html\Element;
 
 class Logo
 {
-    public static function render(array $Attribute = [])
+    public static function render(array $Attribute = [], array $Conf)
     {
+        if (isset($Conf['logo_image']) && !empty($Conf['logo_image']) && file_exists(IMGBS.'default/'.$Conf['logo_image']))
+        {
+            $Attribute['class'] = $Attribute['class'] . ' mt-3';
+            return Element::create('img', array_merge(['src' => SWB . 'images/default/'.$Conf['logo_image']], $Attribute));
+        }
+
+        // set svg
         $Attribute = trim(Element::arrayAttribute($Attribute)??'');
+
         $SVG = <<<HTML
             <svg {$Attribute} version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 118.4 135" style="enable-background:new 0 0 118.4 135;" xml:space="preserve">
                 <path d="M118.3,98.3l0-62.3l0-0.2c-0.1-1.6-1-3-2.3-3.9c-0.1,0-0.1-0.1-0.2-0.1L61.9,0.8c-1.7-1-3.9-1-5.4-0.1l-54,31.1

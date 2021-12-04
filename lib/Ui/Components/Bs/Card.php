@@ -17,7 +17,8 @@ class Card
         $CardSlot = [];
         foreach ($Cards as $Card) {
             extract($Card);
-            $CardSlot['content'][] = ['class' => 'col-3', 'slot' => <<<HTML
+            $Col = (round(12 / count($Cards)));
+            $CardSlot['content'][] = ['class' => 'col-sm-12 col-md-6 col-lg-' . $Col, 'slot' => <<<HTML
                 <div class="card">
                     {$icon}
                     <div class="card-body">

@@ -2,6 +2,14 @@ body {
     background-color: #ededed;
 }
 
+p {
+    font-size: 10pt;
+}
+
+p.lead {
+    font-size: 12pt;
+}
+
 .nopad {
     padding: 0;
 }
@@ -11,8 +19,8 @@ body {
     padding: 0;
 }
 
-.sidepan > div > ul > li {
-    padding: 0.1em 0.8em 0.1em 0.8em;
+.sidepan > div > div > ul > li {
+    padding: 0.5em 0.8em 0.5em 0.8em !important;
     font-size: .875rem;
     font-weight: 600;
     color: #3c3c3c;
@@ -32,6 +40,10 @@ body {
     font-size: 1.3rem;
 }
 
+.sidepan-at-module {
+    background-color: #f7f7f7;
+}
+
 ul.zein-side-nav > li > a {
     color: rgba(39, 39, 39, 0.822);
 }
@@ -47,6 +59,15 @@ li.active > a {
     color: white !important;
     font-weight: bold;
 }
+
+ul.zein-side-nav > span {
+    font-size: 8pt;
+}
+
+ul.zein-side-nav > li > a > i {
+    font-size: 14pt;
+}
+
 
 .h-screen {
     height: 100vh;
@@ -119,7 +140,7 @@ li.active > a {
 }
 
 .zein-card-title {
-    font-size: 10pt;
+    font-size: 9pt;
     text-transform: uppercase;
     font-weight: 500;
 }
@@ -130,6 +151,7 @@ li.active > a {
 
 .zein-photo-profile {
     width: 35px;
+    height: 35px;
 }
 
 .zein-username {
@@ -161,7 +183,8 @@ li.active > a {
 }
 
 .zein-slims-logo {
-    width: 35px;
+    width: 37px;
+    height: 37px;
     margin-left: 25px;
     margin-right: 10px;
 }
@@ -176,6 +199,24 @@ svg.zein-slims-logo {
 .submenu {
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+div.title {
+    font-size: 10pt;
+}
+
+.alterCell.highlighted, .alterCell2.highlighted {
+    background: #cfe8ff !important;
+}
+
+.editLink:before {
+    content: "\F06FF";
+    display: inline-block;
+    font: normal normal normal 24px/1 "Material Design Icons";
+    font-size: 21.5pt;
+    text-rendering: auto;
+    line-height: inherit;
+    -webkit-font-smoothing: antialiased;
 }
 
 div[data-stat*="icon-"] {
@@ -196,4 +237,18 @@ div[data-stat="icon-lent"] {
 
 div[data-stat="icon-available"] {
     background: linear-gradient(109deg,#59c9ff 0,#009fdf 100%)!important;
+}
+
+.btn {
+    border-radius: 25px !important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.authors {
+    font-size: 10pt;
+    color: #000000;
+    font-weight: 500;
 }

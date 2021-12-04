@@ -10,4 +10,39 @@ $(document).ready(function(){
         $('#mainContent').simbioAJAX($(this).attr('href'));
     })
 
+    // Scroll
+    let Scrollbar = window.Scrollbar;
+    Scrollbar.use(window.OverscrollPlugin)
+    Scrollbar.init(document.querySelector('.sidepan'), {
+        alwaysShowTracks: false,
+        continuousScrolling: false,
+        plugins: {
+        overscroll: {
+            effect: 'glow'
+        },
+        }
+    });
+
+    // Drop Down Menu
+    $('.dropdown-menu > a.dropdown-item').click(async function(e){
+        // set href
+        let href = $(this).attr('href');
+        // set container
+        let container = $('#mainContent');
+
+        if (href.match(/logout.php/i))
+        {
+            return;
+        }
+
+        // prevent default event
+        e.preventDefault();
+        
+        // remove statistic
+        $('.dashboard-stat').remove();
+
+        // modify container
+        container.removeClass('mainContentDashboard rounded');
+        container.simbioAJAX($(this).attr('href'));
+    })
 })
