@@ -8,11 +8,16 @@
  * @desc Main Template File
  */
 
+use Zein\Http;
 use Zein\Ui\Html\Skeleton;
 use Zein\Ui\App\SLiMS\Admin\{Logo,Dashboard};
 
 include __DIR__ . '/lib/autoload.php';
 require __DIR__ . '/lib/helper.php';
+
+// Mini Rest
+$Http = Http::getInstance();
+$Http->getPath();
 
 // Html Skeleton
 $Html = Skeleton::getInstance($sysconf);
@@ -43,7 +48,21 @@ $Html
     ->setLink(['href' => JWB . 'jquery.imgareaselect/css/imgareaselect-default.css', 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => AWB . str_replace('style.css', 'css/materialdesignicons.min.css', $sysconf['admin_template']['css']), 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => $sysconf['admin_template']['css'].'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
-    ->setLink(['href' => str_replace('style.css', 'css/custom.css', $sysconf['admin_template']['css']) .'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css']);
+    ->setLink(['href' => str_replace('style.css', 'css/custom.css', $sysconf['admin_template']['css']) .'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
+    ->setStyle([], <<<HTML
+        /*ul.zein-side-nav > li.active {
+            background-color: black;
+        }
+        ul.zein-side-nav > li:hover {
+            background-color: black;
+        }
+        #zein-header, .dashboard-stat {
+            background-color: black !important;
+        }
+        #cboxTitle {
+            background-color: black !important;
+        }*/
+    HTML);
 
 // JS
 $Html
@@ -73,8 +92,9 @@ $Html
 $Param = ['maincontent' => Dashboard::render()];
 if (isset($_GET['mod']) && !empty($_GET['mod'])) $Param = ['maincontent' => preg_replace('/(.*)(\s+)(?=<script)/i', '', $sysconf['page_footer'])];
 
-
+// Render view
 $View = Zein\View::render('mainlayout', $Param, true);
 
+// zdd($_SESSION['priv']);
 // Write Html Body
 $Html->write($View);

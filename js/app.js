@@ -44,5 +44,19 @@ $(document).ready(function(){
         // modify container
         container.removeClass('mainContentDashboard rounded');
         container.simbioAJAX($(this).attr('href'));
-    })
+    });
+
+    // Other module
+    $('.other-module').click(function(e){
+        // prevent default event
+        e.preventDefault();
+        // set Submenus
+        let Submenus = $('.submenu, .submenu-header, zein-side-nav > span');
+        let ModuleList = $('.module-list');
+        // Hide
+        Submenus.attr('style', 'display: none !important');
+        $(this).attr('style', 'display: none !important');
+        // Show
+        ModuleList.removeClass('d-none');
+    });
 })

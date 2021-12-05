@@ -281,3 +281,57 @@ div[data-stat="icon-available"] {
 .card {
     border-radius: 20px !important;
 }
+
+.pagingList b {
+    background: #007bff;
+    border-color: #007bff;
+}
+
+.pagingList a {
+    border-color: transparent;
+    background-color: transparent;
+    color: #9b9b9b;
+}
+
+.pagingList a:not(.next_link,.last_link):hover {
+    background: #007bff;
+    border-color: #007bff;
+    color: white;
+    padding: 8px 0.9em;
+    border-radius: 100%;
+}
+
+.pagingList a[class*="_link"]:hover {
+    background-color: transparent;
+    color: #007bff;
+}
+
+.pagingList b {
+    padding: 8px 1em;
+    border-radius: 100%;
+}
+
+.pagingList {
+    background-color: #dddddd;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.infoBox {
+    background: #b1e4ff;
+}
+
+.errorBox {
+    background-color: #ff3737;
+    border-radius: 10px;
+    margin: 10px 5px 0 5px !important;
+}
+
+.back-to-top:hover {
+    color: white;
+    cursor: pointer
+}
+
+#cboxTitle {
+    background-color: #007bff;
+}

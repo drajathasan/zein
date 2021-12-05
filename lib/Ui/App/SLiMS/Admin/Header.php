@@ -27,12 +27,15 @@ class Header
     private static function dropDownMenu()
     {
         $Menus = [
-            [__('Change User Profiles'), MWB.'system/app_user.php?changecurrent=true&action=detail'],
-            [__('Logout'), AWB . 'logout.php']
+            [__('Change Color Scheme'), AWB . 'index.php/zein?section=colorscheme', 'mdi mdi-invert-colors'],
+            [__('Change User Profiles'), MWB.'system/app_user.php?changecurrent=true&action=detail', 'mdi mdi-account'],
+            [__('Logout'), AWB . 'logout.php', 'mdi mdi-exit-to-app']
         ];
 
         $Html = '';
-        foreach ($Menus as $Menu) { $Html .=  Element::create('a', ['class' => 'dropdown-item', 'href' => $Menu[1]], $Menu[0]); }
+        foreach ($Menus as $Menu) { 
+            $Html .=  Element::create('a', ['class' => 'dropdown-item', 'href' => $Menu[1]], Element::create('i', ['class' => $Menu[2] . ' pr-2']) . $Menu[0]); 
+        }
 
         return $Html;
     }
@@ -41,7 +44,7 @@ class Header
     {
         $PhotoUrl = self::userProfile();
         $DropDown = self::dropDownMenu();
-        $UserName = $_SESSION['realname'];
+        $UserName = ucfirst($_SESSION['uname']);
         $HTML = <<<HTML
             <div class="header-content">
                 <div class="container-fluid">
