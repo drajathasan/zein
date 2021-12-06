@@ -43,13 +43,15 @@ class Http
         return (isset($this->HttpQuery[$Key]) && !empty($Key)) ? $this->HttpQuery[$Key] : $this->HttpQuery ;
     }
 
-    public function getPath(string $Key = '')
+    public function getPath($callback = '')
     {
         if (!isset($_SERVER['PATH_INFO'])) return NULL;
 
         $WebPath = explode('/', trim($_SERVER['PATH_INFO'], '/'));
 
-        return in_array($Key, $WebPath) ? $WebPath[$Key] : $WebPath;
+        if (count($WebPath) > 0 && is_callable($callback)) $callback(array_slice($WebPath, 1)); exit;
+
+        return $WebPath;
     }
 
     public function getMethod()

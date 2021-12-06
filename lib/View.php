@@ -33,7 +33,8 @@ class View
         }
         else
         {
-            include $Instance->ViewDirectoryPath . 'notFound.php';
+            \Zein\Ui\Components\Bs\Alert::render();
+            exit;
         }
 
         if ($Print) return ob_get_clean();

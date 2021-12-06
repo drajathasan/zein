@@ -31,7 +31,7 @@ p.lead {
 }
 
 .sidepan > div > ul > li:hover {
-    background-color: #007bff;
+    background-color: #5baaff;
     border-top-left-radius: 35px;
     border-bottom-left-radius: 35px;
 }
@@ -49,7 +49,7 @@ ul.zein-side-nav > li > a {
 }
 
 ul.zein-side-nav > li:hover {
-    background-color: #007bff;
+    background-color: #5baaff;
     border-top-left-radius: 35px;
     border-bottom-left-radius: 35px;
     margin-top: 5px;
@@ -148,15 +148,30 @@ ul.zein-side-nav > li > a > i {
     border-radius: 20px !important;
 }
 
-@media screen and (min-width: 1366px) {
+@media screen and (width: 1366px) {
     .mainContentDashboard {
         top: -24vh;
     }
 }
 
-@media screen and (min-width: 1920px) {
+@media screen and (width: 1600px) {
+    .mainContentDashboard {
+        top: -28vh;
+    }
+
+    #mainContent:not(.mainContentDashboard) {
+        margin-left: 15.9% !important;
+    }
+}
+
+
+@media screen and (width: 1920px) {
     .mainContentDashboard {
         top: -34vh;
+    }
+
+    div#mainContent {
+        margin-left: 15.9% !important;
     }
 }
 
@@ -212,10 +227,9 @@ ul.zein-side-nav > li > a > i {
 }
 
 .zein-slims-logo {
-    width: 37px;
-    height: 37px;
-    margin-left: 25px;
-    margin-right: 10px;
+    width: 50px;
+    height: 50px;
+    margin-left: 15px;
 }
 
 svg.zein-slims-logo {
@@ -297,7 +311,6 @@ div[data-stat="icon-available"] {
     background: #007bff;
     border-color: #007bff;
     color: white;
-    padding: 8px 0.9em;
     border-radius: 100%;
 }
 
@@ -307,7 +320,6 @@ div[data-stat="icon-available"] {
 }
 
 .pagingList b {
-    padding: 8px 1em;
     border-radius: 100%;
 }
 
@@ -322,6 +334,7 @@ div[data-stat="icon-available"] {
 }
 
 .errorBox {
+    font-weight: bold;
     background-color: #ff3737;
     border-radius: 10px;
     margin: 10px 5px 0 5px !important;
@@ -334,4 +347,8 @@ div[data-stat="icon-available"] {
 
 #cboxTitle {
     background-color: #007bff;
+}
+
+.btn-group > .btn {
+    margin: 0.7em;
 }

@@ -27,7 +27,7 @@ class Header
     private static function dropDownMenu()
     {
         $Menus = [
-            [__('Change Color Scheme'), AWB . 'index.php/zein?section=colorscheme', 'mdi mdi-invert-colors'],
+            [__('Change Color Scheme'), AWB . 'index.php/zein/colorscheme', 'mdi mdi-invert-colors'],
             [__('Change User Profiles'), MWB.'system/app_user.php?changecurrent=true&action=detail', 'mdi mdi-account'],
             [__('Logout'), AWB . 'logout.php', 'mdi mdi-exit-to-app']
         ];
@@ -44,25 +44,25 @@ class Header
     {
         $PhotoUrl = self::userProfile();
         $DropDown = self::dropDownMenu();
-        $UserName = ucfirst($_SESSION['uname']);
+        $UserName = ucwords($_SESSION['realname']);
         $HTML = <<<HTML
             <div class="header-content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-xs-12 col-md-6 col-lg-5 col-xl-5">
-                            <div class="search-menu p-2 w-75 rounded-pill bg-white">
+                        <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
+                            <div class="search-menu p-2 w-50 rounded-pill bg-white">
                                 <input class="pl-3 zein-search-input" placeholder="Search"/>
                             </div>
                         </div>
-                        <div class="col-sm">
-                        </div>
-                        <div class="col-xs-12 col-md-6 col-lg-2 col-xl-2 zein-cursor-pointer dropdown">
-                            <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-                                <img src="{$PhotoUrl}" class="zein-photo-profile rounded-circle">
-                                <span class="text-white zein-username font-weight-bold">{$UserName}</span>
-                            </div>
-                            <div class="dropdown-menu dropdown-menu-right mt-2" aria-labelledby="dropdownMenuButton">
-                                {$DropDown}
+                        <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6 zein-cursor-pointer">
+                            <div class="d-flex justify-content-end dropdown">
+                                <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="{$PhotoUrl}" class="zein-photo-profile rounded-circle">
+                                    <span class="text-white zein-username font-weight-bold">{$UserName}</span>
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-right mt-2" aria-labelledby="dropdownMenuButton">
+                                    {$DropDown}
+                                </div>
                             </div>
                         </div>
                     </div>

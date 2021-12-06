@@ -15,9 +15,12 @@ use Zein\Ui\App\SLiMS\Admin\{Logo,Dashboard};
 include __DIR__ . '/lib/autoload.php';
 require __DIR__ . '/lib/helper.php';
 
-// Mini Rest
+// Render content based pathinfo
 $Http = Http::getInstance();
-$Http->getPath();
+
+$Http->getPath(function($Path){
+    Zein\View::render($Path[0]);
+});
 
 // Html Skeleton
 $Html = Skeleton::getInstance($sysconf);
@@ -49,7 +52,8 @@ $Html
     ->setLink(['href' => AWB . str_replace('style.css', 'css/materialdesignicons.min.css', $sysconf['admin_template']['css']), 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => $sysconf['admin_template']['css'].'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => str_replace('style.css', 'css/custom.css', $sysconf['admin_template']['css']) .'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
-    ->setStyle([], <<<HTML
+    ->setStyle(['id' => 'customColor'], <<<HTML
+        /** Sample **/
         /*ul.zein-side-nav > li.active {
             background-color: black;
         }
