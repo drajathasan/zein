@@ -43,7 +43,7 @@
 
      public static function free(string $Element)
      {
-        return preg_replace('/[^A-Za-z\-]/i', '', strtolower($Element));
+        return preg_replace('/[^A-Za-z\-0-9]/i', '', strtolower($Element));
      }
 
      public static function noquote(string $Value)

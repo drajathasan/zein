@@ -9,6 +9,7 @@
  */
 
 use Zein\Http;
+use Zein\Action\Config;
 use Zein\Ui\Html\Skeleton;
 use Zein\Ui\App\SLiMS\Admin\{Logo,Dashboard};
 
@@ -18,8 +19,12 @@ require __DIR__ . '/lib/helper.php';
 // Render content based pathinfo
 $Http = Http::getInstance();
 
-$Http->getPath(function($Path){
-    Zein\View::render($Path[0]);
+$Http->getPath(function($Path) use($sysconf) {
+    // For Crud process
+    if ($Path[0] === 'config') Config::execute($sysconf, $Path[1]);
+
+    // View render
+    Zein\View::render($Path[0], ['color' => $sysconf['admin_template']['config']['color']??'#007bff']);
 });
 
 // Html Skeleton
@@ -51,22 +56,27 @@ $Html
     ->setLink(['href' => JWB . 'jquery.imgareaselect/css/imgareaselect-default.css', 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => AWB . str_replace('style.css', 'css/materialdesignicons.min.css', $sysconf['admin_template']['css']), 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => $sysconf['admin_template']['css'].'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
-    ->setLink(['href' => str_replace('style.css', 'css/custom.css', $sysconf['admin_template']['css']) .'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
-    ->setStyle(['id' => 'customColor'], <<<HTML
-        /** Sample **/
-        /*ul.zein-side-nav > li.active {
-            background-color: black;
-        }
-        ul.zein-side-nav > li:hover {
-            background-color: black;
-        }
-        #zein-header, .dashboard-stat {
-            background-color: black !important;
-        }
-        #cboxTitle {
-            background-color: black !important;
-        }*/
-    HTML);
+    ->setLink(['href' => str_replace('style.css', 'css/custom.css', $sysconf['admin_template']['css']) .'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css']);
+
+// Custom Color
+if (isset($sysconf['admin_template']['config'])):
+    $Color = $sysconf['admin_template']['config']['color'];
+    $Html->setStyle(['id' => 'customColor'], <<<HTML
+            /** Sample **/
+            ul.zein-side-nav > li.active {
+                background-color: {$Color};
+            }
+            ul.zein-side-nav > li:hover {
+                background-color: {$Color};
+            }
+            #zein-header, .dashboard-stat {
+                background-color: {$Color} !important;
+            }
+            #cboxTitle {
+                background-color: {$Color} !important;
+            }
+        HTML);
+endif;
 
 // JS
 $Html
@@ -86,6 +96,8 @@ $Html
     ->setJs(['type' => 'text/javascript', 'src' => SWB . 'js/popper.min.js'])
     ->setJs(['type' => 'text/javascript', 'src' => SWB . 'js/bootstrap.min.js'])
     ->setJs(['type' => 'text/javascript', 'src' => JWB . 'toastr/toastr.min.js'])
+    ->setJs(['type' => 'text/javascript', 'src' => JWB . 'chartjs/Chart.min.js', '', 'Bottom'])
+    ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/vanilla-picker.min.js'])
     ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/smooth-scrollbar.js'])
     ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/overscroll.js'])
     ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/app.js'], '', 'Bottom');

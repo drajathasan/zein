@@ -8,6 +8,48 @@
  * @desc [description]
  */
 
-
+use Zein\Ui\Html\Element;
+use Zein\Ui\Components\Bs\HorizontalForm;
 
 defined('INDEX_AUTH') or die('No direct access!');
+
+// Horizontal Form
+$HorizontalForm = HorizontalForm::getInstance();
+// Form Attribute
+$HorizontalForm
+    ->setTitle('Zein Config')
+    ->setMethod('POST')
+    ->setAction(AWB . 'index.php/zein/config/save')
+    ->setAttribute(['id' => 'zeinTemplateConfig', 'class' => 'm-5 bg-white', 'target' => 'blindSubmit']);
+
+
+/** Set field **/
+// Group
+$Slot = Element::create('input', ['class' => 'form-control w-25 d-inline-block mr-2', 'id' => 'colorPickerTarget', 'name' => 'color', 'value' => $color]) . 
+        Element::create('button', ['class' => 'btn btn-default', 'id' => 'colorPicker'], 'Pick Color');
+
+$HorizontalForm->Group(Element::create('strong', [], 'Color Scheme'), $Slot);
+
+// Create form
+echo $HorizontalForm->setSubmitButton()->create();
+?>
+<script>
+    if (document.querySelector('#colorPicker') !== null)
+    {
+        // Create a new Picker instance and set the parent element.
+        // By default, the color picker is a popup which appears when you click the parent.
+        var parent = document.querySelector('#colorPicker');
+        var picker = new Picker(parent);
+        var container = document.querySelectorAll('ul.zein-side-nav > li.active, ul.zein-side-nav > li:hover, #zein-header, .dashboard-stat, #cboxTitle');
+
+        // You can do what you want with the chosen color using two callbacks: onChange and onDone.
+        picker.onChange = function(color) {
+            container.forEach(el => {
+                el.setAttribute('style', `background-color : ${color.hex} !important`);
+            });
+            document.querySelector('#colorPickerTarget').value = color.hex;
+        };
+
+        // onDone is similar to onChange, but only called when you click 'Ok'.
+    }
+</script>
