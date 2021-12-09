@@ -56,7 +56,8 @@ $Html
     ->setLink(['href' => JWB . 'jquery.imgareaselect/css/imgareaselect-default.css', 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => AWB . str_replace('style.css', 'css/materialdesignicons.min.css', $sysconf['admin_template']['css']), 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => $sysconf['admin_template']['css'].'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
-    ->setLink(['href' => str_replace('style.css', 'css/custom.css', $sysconf['admin_template']['css']) .'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css']);
+    ->setLink(['href' => str_replace('style.css', 'css/custom.css', $sysconf['admin_template']['css']) .'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
+    ->setLink(['href' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/css/tui-chart.min.css', 'rel' => 'stylesheet', 'type' => 'text/css']);
 
 // Custom Color
 if (isset($sysconf['admin_template']['config'])):
@@ -96,11 +97,11 @@ $Html
     ->setJs(['type' => 'text/javascript', 'src' => SWB . 'js/popper.min.js'])
     ->setJs(['type' => 'text/javascript', 'src' => SWB . 'js/bootstrap.min.js'])
     ->setJs(['type' => 'text/javascript', 'src' => JWB . 'toastr/toastr.min.js'])
-    ->setJs(['type' => 'text/javascript', 'src' => JWB . 'chartjs/Chart.min.js', '', 'Bottom'])
+    ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/tui-chart-all.min.js'])
     ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/vanilla-picker.min.js'])
     ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/smooth-scrollbar.js'])
     ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/overscroll.js'])
-    ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/app.js'], '', 'Bottom');
+    ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/app.js', 'name' => 'app', 'resturl' => SWB .'index.php?p='], '', 'Bottom');
 
 /** End Head **/
 

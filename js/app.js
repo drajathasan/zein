@@ -59,4 +59,24 @@ $(document).ready(function(){
         // Show
         ModuleList.removeClass('d-none');
     });
+
+    // Chart and statistic
+    // Modified from default/home.php
+    const getTotal = async (url, selector = null) => {
+        // Rest url
+        let Rest = $('script[name="app"]').attr('resturl');
+        // set selector default value 
+        if(selector !== null) selector.text('0,0');
+        // Make a request
+        let res = await (await fetch(Rest + url)).json();
+        // set value if selector is not null
+        if(selector !== null) selector.text(new Intl.NumberFormat('id-ID').format(res.data));
+        // return as promise
+        return res.data;
+    }
+
+    getTotal('api/biblio/total/all', $('h3[data-stat="totalCollection"]'));
+    getTotal('api/item/total/all', $('h3[data-stat="totalItems"]'));
+    getTotal('api/item/total/lent', $('h3[data-stat="totalLent"]'));
+    getTotal('api/item/total/available', $('h3[data-stat="totalAvailable"]'));
 })

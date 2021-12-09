@@ -23,7 +23,7 @@ class Card
                     {$icon}
                     <div class="card-body">
                         <span class="card-title zein-card-title">{$label}</span>
-                        <h3 class="card-text zein-card-text font-weight-bold">0,0</h3>
+                        <h3 class="card-text zein-card-text font-weight-bold" data-stat="{$stat}">0,0</h3>
                         <p class="card-text"><small class="text-muted">{$sublabel}</small></p>
                     </div>
                 </div>
