@@ -9,7 +9,7 @@
  */
 
 namespace Zein\Action;
-use Zein\Ui\Html\Element;
+use Zein\Ui\Html\{Element,Skeleton};
 use SLiMS\DB;
 
 class Config
@@ -22,7 +22,7 @@ class Config
         $this->Conf = $Conf;
     }
 
-    public function save()
+    private function save()
     {
         $this->Conf['admin_template']['config'] = [
             'color' => $_POST['color']??'#000'
@@ -32,7 +32,10 @@ class Config
         $DB = DB::getInstance();
 
         $State = $DB->prepare('update `user` set `admin_template` = ? where user_id = ?');
-        $State->execute([serialize($this->Conf['admin_template']), $_SESSION['uid']??0]);
+        $Update = $State->execute([serialize($this->Conf['admin_template']), $_SESSION['uid']??0]);
+
+        // Remove cache
+        Skeleton::removeCache();
 
         echo Element::create('script', [], 'setTimeout(() => {parent.window.location = "' . AWB . '"}, 5000)');
         \utility::jsToastr('Data has been saved', 'Success', 'success');

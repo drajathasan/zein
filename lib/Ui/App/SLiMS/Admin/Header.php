@@ -50,8 +50,13 @@ class Header
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6">
-                            <div class="search-menu p-2 w-50 rounded-pill bg-white">
-                                <input class="pl-3 zein-search-input" placeholder="Search"/>
+                            <div class="search-menu p-2 w-50 rounded-pill bg-white dropdown">
+                                <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
+                                    <input class="pl-3 zein-search-input" placeholder="Search"/>
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-left search=target mt-2" aria-labelledby="dropdownMenuButton">
+                                    
+                                </div>
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-6 col-lg-6 col-xl-6 zein-cursor-pointer">

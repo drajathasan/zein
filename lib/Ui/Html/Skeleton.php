@@ -10,9 +10,12 @@
 
 namespace Zein\Ui\Html;
 
+use Zein\Ui\Tool;
+
 class Skeleton
 {
     private static $Instance = null;
+    private $Minify = false;
     public $Conf = [];
     public $Head = [];
     public $AssetPath = '';
@@ -34,17 +37,40 @@ class Skeleton
         return $this;
     }
 
+    public function setMinify(bool $Status)
+    {
+        $this->Minify = $Status;
+        return $this;
+    }
+
     public function setJs(array $Attribute, string $Slot = '', string $Position = 'Head')
     {
+        // minified it?
+        if ($this->Minify && isset($Attribute['src']))
+        {
+            $ModifiedAttribute = $Attribute;
+            Tool::minify(dirname(str_replace(AWB, SB . 'admin' . DS, $ModifiedAttribute['src'])), basename($ModifiedAttribute['src']));
+            $Attribute['src'] = str_replace('.js', '.min.js', $Attribute['src']);
+        }
         // Mutating
-        $Attribute['src'] = $Attribute['src'] . '?v=' . date('this');
+        if (isset($Attribute['src']) && !preg_match('/.min.js/i', $Attribute['src'])) $Attribute['src'] = $Attribute['src'] . '?v=' . date('this');
         $this->$Position['js'][] = Element::create('script', $Attribute, $Slot);
 
         return $this;
     }
 
+
+
     public function setLink(array $Attribute)
     {
+        // minified it?
+        if ($this->Minify && isset($Attribute['href']))
+        {
+            $ModifiedAttribute = $Attribute;
+            Tool::minify(dirname(str_replace(AWB, SB . 'admin' . DS, $ModifiedAttribute['href'])), basename($ModifiedAttribute['href']));
+            $Attribute['href'] = str_replace('.css', '.min.css', $Attribute['href']);
+        }
+
         Element::$Close = false;
         $this->Head['link'][] = Element::create('link', $Attribute);
         Element::$Close = true;
@@ -82,7 +108,47 @@ class Skeleton
         // end body
 
         // Write HTML
-        echo Element::create('html', ['lang' => $this->Conf['default_lang']], $Head . $Body);
+        $HTML = Element::create('html', ['lang' => $this->Conf['default_lang']], $Head . $Body);
+
+        // Make cache
+        $this->makeCache($HTML);
+
+        // Ouput
+        echo $HTML;
+    }
+
+    private function makeCache(string $Html)
+    {
+        $id = (isset($_GET['mod']) && !empty($_GET['mod'])) ? $_GET['mod'] : 'dashboard';
+        file_put_contents(SB . 'files/cache/zein-html-cache-' . $_SESSION['uid'] . '-' . $id . '.html', $Html);
+    }
+
+    public function loadCache()
+    {
+        $id = (isset($_GET['mod']) && !empty($_GET['mod'])) ? $_GET['mod'] : 'dashboard';
+        $CachePath = SB . 'files/cache/zein-html-cache-' . $_SESSION['uid'] . '-' . $id . '.html';
+        
+        if (file_exists($CachePath))
+        {
+            ob_start();
+            echo file_get_contents($CachePath);
+            $Content = ob_get_clean();
+
+            // Setout cache
+            exit($Content);
+        }
+    }
+
+    public static function removeCache()
+    {
+        $CacheDir = array_diff(scandir(SB . 'files/cache/'), ['.','..']);
+
+        foreach ($CacheDir as $CacheFile) {
+            if (preg_match('/zein-html-cache-' . $_SESSION['uid'] . '/i', $CacheFile))
+            {
+                @unlink(SB . 'files/cache/' . $CacheFile);
+            }
+        }
     }
 
     public static function getInstance(array $Conf, string $AssetPath = '', string $ViewPath = '')

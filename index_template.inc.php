@@ -14,6 +14,7 @@ use Zein\Ui\Html\Skeleton;
 use Zein\Ui\App\SLiMS\Admin\{Logo,Dashboard};
 
 include __DIR__ . '/lib/autoload.php';
+include __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/lib/helper.php';
 
 // Render content based pathinfo
@@ -29,6 +30,9 @@ $Http->getPath(function($Path) use($sysconf) {
 
 // Html Skeleton
 $Html = Skeleton::getInstance($sysconf);
+
+// Load from cache if available
+$Html->loadCache();
 
 /**  Head Element **/
 // Meta
@@ -55,8 +59,12 @@ $Html
     ->setLink(['href' => JWB . 'toastr/toastr.min.css?' . date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => JWB . 'jquery.imgareaselect/css/imgareaselect-default.css', 'rel' => 'stylesheet', 'type' => 'text/css'])
     ->setLink(['href' => AWB . str_replace('style.css', 'css/materialdesignicons.min.css', $sysconf['admin_template']['css']), 'rel' => 'stylesheet', 'type' => 'text/css'])
-    ->setLink(['href' => $sysconf['admin_template']['css'].'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
-    ->setLink(['href' => str_replace('style.css', 'css/custom.css', $sysconf['admin_template']['css']) .'?'.date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
+    // Start minify
+    ->setMinify(true)
+    ->setLink(['href' => $sysconf['admin_template']['css'], 'rel' => 'stylesheet', 'type' => 'text/css'])
+    ->setLink(['href' => str_replace('style.css', 'css/custom.css', $sysconf['admin_template']['css']), 'rel' => 'stylesheet', 'type' => 'text/css'])
+    // End minify
+    ->setMinify(false)
     ->setLink(['href' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/css/tui-chart.min.css', 'rel' => 'stylesheet', 'type' => 'text/css']);
 
 // Custom Color
@@ -100,8 +108,21 @@ $Html
     ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/tui-chart-all.min.js'])
     ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/vanilla-picker.min.js'])
     ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/smooth-scrollbar.js'])
-    ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/overscroll.js'])
-    ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/app.js', 'name' => 'app', 'resturl' => SWB .'index.php?p='], '', 'Bottom');
+    ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/overscroll.js']);
+
+// Translate
+$TranslateJS = '
+let barchart = ' . json_encode([__('Latest Transactions'), __('Loan'), __('Return'), __('Extend')]) . ';
+let doughchart = ' . json_encode([__('Summary'), __('Total'), __('Loan'), __('Return'), __('Extend')]) . ';
+';
+
+$Html
+    // Start minify
+    ->setMinify(true)
+    ->setJs(['type' => 'text/javascript'], $TranslateJS, 'Bottom')
+    ->setJs(['type' => 'text/javascript', 'src' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/js/app.js', 'name' => 'app', 'resturl' => SWB .'index.php?p=', 'startdate' => date('Y-m-d')], '', 'Bottom')
+    // End minify
+    ->setMinify(false);
 
 /** End Head **/
 

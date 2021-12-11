@@ -130,7 +130,12 @@ ul.zein-side-nav > li > a > i {
     background-size: 22px;
 }
 
-.search-menu > input {
+.search-target {
+    min-width: 100% !important;
+    left: -7px !important;
+}
+
+.search-menu > div > input {
     border: none;
     outline: none;
     background: transparent;
@@ -145,6 +150,15 @@ ul.zein-side-nav > li > a > i {
 .mainContentDashboard {
     margin-left: 19% !important;
     margin-right: 3%;
+    border-radius: 20px !important;
+    background-color: transparent !important;
+}
+
+#transactionState, #collectionStat {
+    height: 450px;
+}
+
+.mainContentDashboard > div > div > div > .statistic {
     border-radius: 20px !important;
 }
 
@@ -179,8 +193,8 @@ ul.zein-side-nav > li > a > i {
     z-index: 0;
     display: inline-flex;
     position: relative;
-    left: 18%;
-    width: 80%;
+    left: 19%;
+    width: 78%;
 }
 
 .zein-card-title {
