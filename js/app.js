@@ -107,6 +107,10 @@ const arrayIncrease = (array) => {
     return array;
 }
 
+$('.zein-search-input').keyup(function(){
+    alert('Hai');
+});
+
 if (document.querySelector('#transactionState') !== null)
 {
     chartData(`api/loan/getdate/${StartDate}`, document.querySelector('#transactionState'), (Result, Container) => {

@@ -54,8 +54,10 @@ class Header
                                 <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
                                     <input class="pl-3 zein-search-input" placeholder="Search"/>
                                 </div>
-                                <div class="dropdown-menu dropdown-menu-left search=target mt-2" aria-labelledby="dropdownMenuButton">
-                                    
+                                <div class="dropdown-menu dropdown-menu-left search-target mt-2" aria-labelledby="dropdownMenuButton">
+                                    <div class="px-2">
+                                        ....
+                                    </div>
                                 </div>
                             </div>
                         </div>

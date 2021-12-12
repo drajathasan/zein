@@ -16,6 +16,7 @@ class Config
 {
     private static $Instance = null;
     private $Conf;
+    private $Path;
 
     private function __construct(array $Conf)
     {
@@ -41,7 +42,7 @@ class Config
         \utility::jsToastr('Data has been saved', 'Success', 'success');
     }
 
-    public static function execute(array $Conf, string $Method)
+    public static function execute(array $Conf, array $Path)
     {
         if (is_null(self::$Instance))
         {
@@ -49,6 +50,8 @@ class Config
         }
 
         try {
+            $Method = $Path[1];
+            self::$Instance->Path = $Path;
             self::$Instance->$Method();
         } catch (\Exception $e) {
             \utility::jsToastr($e->getMessage(), 'Error', 'danger');

@@ -59,8 +59,6 @@ class Skeleton
         return $this;
     }
 
-
-
     public function setLink(array $Attribute)
     {
         // minified it?
@@ -87,6 +85,10 @@ class Skeleton
 
     public function write(string $Content, array $Attribute = [])
     {
+        // Start compression
+        Tool::compress('start');
+
+        // Start html tag
         $Html = '<!DOCTYPE Html>';
         
         // Head element
@@ -108,7 +110,10 @@ class Skeleton
         // end body
 
         // Write HTML
-        $HTML = Element::create('html', ['lang' => $this->Conf['default_lang']], $Head . $Body);
+        echo Element::create('html', ['lang' => $this->Conf['default_lang']], $Head . $Body);
+
+        // End compression
+        $HTML = Tool::compress('end');
 
         // Make cache
         $this->makeCache($HTML);
@@ -130,9 +135,11 @@ class Skeleton
         
         if (file_exists($CachePath))
         {
-            ob_start();
+            // Start compression
+            Tool::compress('start');
             echo file_get_contents($CachePath);
-            $Content = ob_get_clean();
+            // Compress end
+            $Content = Tool::compress('end');
 
             // Setout cache
             exit($Content);

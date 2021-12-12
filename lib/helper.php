@@ -19,3 +19,18 @@ if (!function_exists('zdd'))
         if ($Close) exit;
     }
 }
+
+if (!function_exists('callClass'))
+{
+    function callClass(string $Class, Closure $Callback)
+    {
+        if (class_exists($Class))
+        {
+            $Callback($Class);
+        }
+        else
+        {
+            echo 'Action not found!';
+        }
+    }
+}

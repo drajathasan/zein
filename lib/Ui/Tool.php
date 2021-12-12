@@ -26,4 +26,23 @@ class Tool
             $minifier->minify($Path . DS . $FileInfo['filename'] . '.min.' . $FileInfo['extension']);
         }
     }
+
+    public static function compress(string $State)
+    {
+        if ($State === 'start')
+        {
+            if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip'))
+            {
+                ob_start('ob_gzhandler');
+            }
+            else
+            {
+                ob_start();
+            }
+        }
+        else
+        {
+            return ob_get_clean();
+        }
+    }
 }

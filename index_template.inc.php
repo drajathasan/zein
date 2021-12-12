@@ -9,7 +9,6 @@
  */
 
 use Zein\Http;
-use Zein\Action\Config;
 use Zein\Ui\Html\Skeleton;
 use Zein\Ui\App\SLiMS\Admin\{Logo,Dashboard};
 
@@ -21,11 +20,20 @@ require __DIR__ . '/lib/helper.php';
 $Http = Http::getInstance();
 
 $Http->getPath(function($Path) use($sysconf) {
-    // For Crud process
-    if ($Path[0] === 'config') Config::execute($sysconf, $Path[1]);
-
     // View render
-    Zein\View::render($Path[0], ['color' => $sysconf['admin_template']['config']['color']??'#007bff']);
+    if (count($Path) < 2)
+    {
+        Zein\View::render($Path[0], ['color' => $sysconf['admin_template']['config']['color']??'#007bff']);
+        exit;
+    }
+
+    // For Crud process
+    $Class = $Path[0];
+    unset($Path[0]);
+    $Param = [$sysconf, $Path];
+    callClass('Zein\Action\\' . $Class, function($Class) use($Param) {
+        $Class::execute($Param[0], $Param[1]);
+    });
 });
 
 // Html Skeleton
