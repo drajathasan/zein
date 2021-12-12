@@ -366,3 +366,7 @@ div[data-stat="icon-available"] {
 .btn-group > .btn {
     margin: 0.7em;
 }
+
+#mainForm td {
+    font-size: 10pt !important;
+}
