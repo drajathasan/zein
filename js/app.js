@@ -108,7 +108,32 @@ const arrayIncrease = (array) => {
 }
 
 $('.zein-search-input').keyup(function(){
-    alert('Hai');
+    let cache = localStorage.getItem('zeinSearchMenu');
+
+    if (cache !== null)
+    {
+        let Keyword = new RegExp($(this).val(), 'g');
+        let SearchMenu = JSON.parse(cache);
+        let Module = Object.keys(SearchMenu);
+        let Menu = Object.values(SearchMenu);
+
+        let list = '<ul class="w-100 d-block p-2">';
+        let invisible = '';
+        
+        if ($(this).val().trim() === '') return '...';
+
+        Menu.forEach((item,index) => {
+            list += `<span>${Module[index]}</span>`;
+            item.forEach((submenu,index) => {
+                if (submenu[0].match(Keyword))
+                {
+                    list += `<li class="pl-2">${submenu[0]}</li>`;
+                }
+            });
+        });
+        list += '<ul>';
+        $('.search-target').html(list);
+    }
 });
 
 if (document.querySelector('#transactionState') !== null)

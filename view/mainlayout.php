@@ -9,7 +9,7 @@
  */
 
 use Zein\Ui\Html\Element;
-use Zein\Ui\App\SLiMS\Admin\{Sidepan,Header};
+use Zein\Ui\App\SLiMS\Admin\{Sidepan,Header,searchMenu};
 use Zein\Ui\Components\Bs\Card;
 
 defined('INDEX_AUTH') or die('No direct access!');
@@ -45,6 +45,13 @@ $ContentClass = isset($_GET['mod']) ? 'rounded' : 'mainContentDashboard rounded'
 echo Element::create('div', ['id' => 'mainContent', 'class' => $ContentClass], $maincontent??'');
 // Iframe
 echo Element::create('iframe', ['name' => 'blindSubmit', 'style' => 'display: none; visibility: hidden; width: 0; height: 0;']);
+
+// create search menu cache
+if (!isset($_SESSION['hasSearchGenerate']))
+{
+    $_SESSION['hasSearchGenerate'] = true;
+    echo Element::create('script', ['type' => 'text/javascript'], 'localStorage.setItem("zeinSearchMenu", \'' . json_encode(SearchMenu::getInstance()->generate()) . '\')');
+}
 
 // Get buffer
 echo ob_get_clean();

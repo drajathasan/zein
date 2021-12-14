@@ -136,7 +136,7 @@ $Html
 
 // Set up view
 $Param = ['maincontent' => Dashboard::render()];
-if (isset($_GET['mod']) && !empty($_GET['mod'])) $Param = ['maincontent' => preg_replace('/(.*)(\s+)(?=<script)/i', '', $sysconf['page_footer'])];
+if (isset($_GET['mod']) && !empty($_GET['mod'])) $Param['maincontent'] = preg_replace('/(.*)(\s+)(?=<script)/i', '', $sysconf['page_footer']);
 
 // Render view
 $View = Zein\View::render('mainlayout', $Param, true);
