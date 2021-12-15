@@ -27,7 +27,7 @@ class Header
     private static function dropDownMenu()
     {
         $Menus = [
-            [__('Change Color Scheme'), AWB . 'index.php/zein/colorscheme', 'mdi mdi-invert-colors'],
+            [__('Template Settings'), AWB . 'index.php/zein/colorscheme', 'mdi mdi-cogs'],
             [__('Change User Profiles'), MWB.'system/app_user.php?changecurrent=true&action=detail', 'mdi mdi-account'],
             [__('Logout'), AWB . 'logout.php', 'mdi mdi-exit-to-app']
         ];

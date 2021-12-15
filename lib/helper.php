@@ -34,3 +34,11 @@ if (!function_exists('callClass'))
         }
     }
 }
+
+if (!function_exists('simbioChangeParam'))
+{
+    function simbioChangeParam(string $Simbio, string $ChangeWith)
+    {
+        return preg_replace('/(?<=simbioAJAX\(\')(.*)(?=\',)/i', $ChangeWith, $Simbio);
+    }
+}

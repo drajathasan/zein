@@ -30,6 +30,9 @@ $Slot = Element::create('input', ['class' => 'form-control w-25 d-inline-block m
 
 $HorizontalForm->Group(Element::create('strong', [], 'Color Scheme'), $Slot);
 
+// Remove Cache
+$HorizontalForm->Group(Element::create('strong', [], 'Cache'), Element::create('button', ['class' => 'btn btn-default clearCache notAJAX', 'id' => 'clearCache'], 'Clear'));
+
 // Create form
 echo $HorizontalForm->setSubmitButton()->create();
 ?>
@@ -52,4 +55,23 @@ echo $HorizontalForm->setSubmitButton()->create();
 
         // onDone is similar to onChange, but only called when you click 'Ok'.
     }
+
+    $('.clearCache').click(function(e) {
+        e.preventDefault();
+
+        fetch('index.php/zein/config/removecache')
+        .then(response => {
+            if (response.status === 200)
+            {
+                toastr.success('Cache has been remove', 'Success');
+                setTimeout(() => {
+                    window.location.href = '<?= AWB ?>';
+                }, 5000);
+            }
+        })
+        .catch(error => {
+            toastr.error(error, 'Error');
+        });
+
+    })
 </script>

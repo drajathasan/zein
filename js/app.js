@@ -107,33 +107,52 @@ const arrayIncrease = (array) => {
     return array;
 }
 
-$('.zein-search-input').keyup(function(){
-    let cache = localStorage.getItem('zeinSearchMenu');
+$('.zein-search-input').keyup(async function(){
+    try {
+        let Request = await fetch('index.php/zein/search/menu?keyword=' + $(this).val());
+        let Data = await Request.json();
 
-    if (cache !== null)
-    {
-        let Keyword = new RegExp($(this).val(), 'g');
-        let SearchMenu = JSON.parse(cache);
-        let Module = Object.keys(SearchMenu);
-        let Menu = Object.values(SearchMenu);
-
-        let list = '<ul class="w-100 d-block p-2">';
-        let invisible = '';
-        
-        if ($(this).val().trim() === '') return '...';
-
-        Menu.forEach((item,index) => {
-            list += `<span>${Module[index]}</span>`;
-            item.forEach((submenu,index) => {
-                if (submenu[0].match(Keyword))
-                {
-                    list += `<li class="pl-2">${submenu[0]}</li>`;
-                }
-            });
+        let Menu = '<ul class="d-block pl-3 m-0">';
+        Data.forEach((menu, index) => {
+            Menu += `<li class="list-unstyled"><a class="zein-search-submenu" href="${menu[1]}">${menu[0]}</a></li>`;
         });
-        list += '<ul>';
-        $('.search-target').html(list);
+        Menu += '</ul>';
+
+        $('.search-target').html(Menu);
+        
+    } catch (error) {
+        console.log(error);
     }
+});
+
+$('.search-target').on('click', '.zein-search-submenu', function(e) {
+    e.preventDefault();
+    
+    // set href
+    let href = $(this).attr('href');
+    // set container
+    let container = $('#mainContent');
+
+    // remove statistic
+    $('.dashboard-stat, #transactionState, #collectionStat').remove();
+
+    // Reset value
+    $('.zein-search-input').val('');
+
+    // modify container
+    container.removeClass('mainContentDashboard rounded');
+    container.simbioAJAX($(this).attr('href'));
+});
+
+$('#mainContent').on('click', 'input[name="updateData"]', function(e){
+    if ($('#mainContent').find('#library_name').length > 0)
+    {
+        fetch('index.php/zein/config/removecache');
+    }
+});
+
+$('#mainContent').on('change', '.custom-control-input', function(e){
+    fetch('index.php/zein/config/removecache');
 });
 
 if (document.querySelector('#transactionState') !== null)

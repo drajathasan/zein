@@ -10,7 +10,7 @@
 
 use Zein\Http;
 use Zein\Ui\Html\Skeleton;
-use Zein\Ui\App\SLiMS\Admin\{Logo,Dashboard};
+use Zein\Ui\App\SLiMS\Admin\{Logo,Dashboard,SearchMenu};
 
 include __DIR__ . '/lib/autoload.php';
 include __DIR__ . '/vendor/autoload.php';
@@ -35,6 +35,9 @@ $Http->getPath(function($Path) use($sysconf) {
         $Class::execute($Param[0], $Param[1]);
     });
 });
+
+// Create search menu
+SearchMenu::getInstance()->generate();
 
 // Html Skeleton
 $Html = Skeleton::getInstance($sysconf);
@@ -136,6 +139,10 @@ $Html
 
 // Set up view
 $Param = ['maincontent' => Dashboard::render()];
+
+// Submenu
+
+// if get mod
 if (isset($_GET['mod']) && !empty($_GET['mod'])) $Param['maincontent'] = preg_replace('/(.*)(\s+)(?=<script)/i', '', $sysconf['page_footer']);
 
 // Render view
