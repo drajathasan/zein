@@ -31,6 +31,8 @@ $Http->getPath(function($Path) use($sysconf) {
     $Class = $Path[0];
     unset($Path[0]);
     $Param = [$sysconf, $Path];
+
+    // Execute action
     callClass('Zein\Action\\' . $Class, function($Class) use($Param) {
         $Class::execute($Param[0], $Param[1]);
     });

@@ -123,6 +123,10 @@ ul.zein-side-nav > li > a > i {
     width: 80%;
 }
 
+.alert-dropdown:after {
+    display: none !important;
+}
+
 .search-menu {
     background-image: url(../images/ios7-search.png);
     background-repeat: no-repeat;
@@ -133,6 +137,8 @@ ul.zein-side-nav > li > a > i {
 .search-target {
     min-width: 100% !important;
     left: -7px !important;
+    max-height: 15em !important;
+    overflow-y: auto !important;
 }
 
 .search-menu > div > input {

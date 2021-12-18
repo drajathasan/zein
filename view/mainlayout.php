@@ -33,8 +33,6 @@ if (!isset($_GET['mod'])):
     echo Element::create('div', ['class' => 'w-100 h-50 dashboard-stat bg-primary'], 
                       Element::create('div', ['class' => 'mt-3 inner-stat'], 
                       Card::deck($CardContent)));
-
-    echo Element::create('div', ['class' => 'w-100 h-auto d-block alert-area']);
 endif;
 // Navbar
 echo Element::create('nav', ['id' => 'zein-nav ', 'class' => 'position-fixed'], Sidepan::render());

@@ -107,18 +107,40 @@ const arrayIncrease = (array) => {
     return array;
 }
 
+$('.zein-search-input').click(function(){
+    let Container = $('.search-target');
+    Container.html('<span class="p-2">Waiting....</span>');
+});
+
 $('.zein-search-input').keyup(async function(){
+    let Container = $('.search-target');
+    let Match = 0;
+
+    if ($(this).val().trim().length === 0)
+    {
+        Container.html('<span class="p-2">Waiting....</span>');
+        return;
+    }
+
+    Container.html('<span class="p-2">Please Wait...</span>');
+
     try {
         let Request = await fetch('index.php/zein/search/menu?keyword=' + $(this).val());
         let Data = await Request.json();
 
         let Menu = '<ul class="d-block pl-3 m-0">';
         Data.forEach((menu, index) => {
-            Menu += `<li class="list-unstyled"><a class="zein-search-submenu" href="${menu[1]}">${menu[0]}</a></li>`;
+            Menu += `<li class="list-unstyled p-3"><a class="zein-search-submenu" href="${menu[1]}">${menu[0]}</a></li>`;
+            Match++;
         });
         Menu += '</ul>';
 
-        $('.search-target').html(Menu);
+        if (Match === 0)
+        {
+            Menu = '<span class="p-2">Submenu not found...</span>';
+        }
+
+        setTimeout(() => { Container.html(Menu); }, 1500);
         
     } catch (error) {
         console.log(error);
