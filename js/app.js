@@ -22,7 +22,7 @@ Scrollbar.init(document.querySelector('.sidepan'), {
 });
 
 // Drop Down Menu
-$('.dropdown-menu > a.dropdown-item').click(async function(e){
+$('.dropdown-menu').on('click', 'a.dropdown-item', function(e){
     // set href
     let href = $(this).attr('href');
     // set container
@@ -85,6 +85,40 @@ if ($('.inner-stat').length > 0)
     getTotal('api/item/total/lent', $('h3[data-stat="totalLent"]'));
     getTotal('api/item/total/available', $('h3[data-stat="totalAvailable"]'));
 }
+
+// alert
+const getBell = async () => {
+    let alertNumberTemplate = `
+        <span class="font-weight-bold text-white bg-danger rounded-lg p-1">
+            {alertNumber}
+        </span>`;
+    let alertStringTemplate = `
+        <a href="{url}" class="dropdown-item">
+            <i class="mdi mdi-dots-hexagon"></i> 
+            {message}
+        </a>`;
+
+    try {
+        let Request = await fetch('index.php/zein/alert/generate');
+        let Json = await Request.json();
+
+        $('.alert-dropdown').append(alertNumberTemplate.replace('{alertNumber}', Json.num));
+
+        let DropDown = '';
+        Json.alert.forEach(Error => {
+            DropDown += alertStringTemplate
+                            .replace('{url}', Error.url)
+                            .replace('{message}', Error.message);
+        });
+
+        $('.alert-dropdown-string').html(DropDown);
+
+    } catch (error) {
+        toastr.error('Error', error.toString());
+    }
+}
+
+getBell('op');
 
 // chartData
 const chartData = async (Url, Selector, Callback = null) => {

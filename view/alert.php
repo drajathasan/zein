@@ -7,5 +7,8 @@
  * @license GPLv3
  * @desc [description]
  */
+
+ if (!isset($_GET['type'])) die('No alert : )');
+
+ 
 ?>
-Hai<?= $_GET['type']??'Gak ada' ?>
