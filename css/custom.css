@@ -376,3 +376,24 @@ div[data-stat="icon-available"] {
 #mainForm td {
     font-size: 10pt !important;
 }
+
+.profile-bg {
+    width: 100%;
+    height: 15rem;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.profile-img {
+    position: absolute;
+    right: 12rem;
+    top: 13rem;
+    border: 5px white solid;
+}
+
+.imageCopyRight {
+    display: block;
+    position: absolute;
+    bottom: 32px;
+    left: 32px;
+}

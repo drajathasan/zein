@@ -21,7 +21,7 @@ class View
 
     public static function render(string $ViewName, array $Param = [], bool $Print = false, string $ViewPath = '')
     {
-        global $PluginENV;
+        global $sysconf,$PluginENV;
         $Instance = new static($ViewPath);
         $ViewName = str_replace('.', '', $ViewName); // no file inclusion attack :)
         

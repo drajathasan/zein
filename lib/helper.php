@@ -42,3 +42,12 @@ if (!function_exists('simbioChangeParam'))
         return preg_replace('/(?<=simbioAJAX\(\')(.*)(?=\',)/i', $ChangeWith, $Simbio);
     }
 }
+
+if (!function_exists('zeinUrl'))
+{
+    function zeinUrl(string $AdditionalPath = '')
+    {
+        global $sysconf;
+        return AWB . $sysconf['admin_template']['dir'].'/'.$sysconf['admin_template']['theme'] . '/' . $AdditionalPath;
+    }
+}

@@ -14,10 +14,10 @@ use Zein\Ui\Html\Element;
 
 class Alert
 {
-    public static function render()
+    public static function render(string $Title = 'Not Found', string $Message = 'View is not found!')
     {
         echo Element::create('div', ['class' => 'alert alert-danger'], 
-                Element::create('h3', ['class' => 'font-weight-bold'], 'Not Found') . 
-                Element::create('p', [], 'View is not found!'));
+                Element::create('h3', ['class' => 'font-weight-bold'], $Title) . 
+                Element::create('p', [], $Message));
     }
 }

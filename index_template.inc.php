@@ -8,13 +8,25 @@
  * @desc Main Template File
  */
 
-use Zein\Http;
+use Zein\{Http,Core};
 use Zein\Ui\Html\Skeleton;
 use Zein\Ui\App\SLiMS\Admin\{Logo,Dashboard,SearchMenu};
 
 include __DIR__ . '/lib/autoload.php';
 include __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/lib/helper.php';
+
+// Zein Version
+define('ZEIN_VERSION', '1.0.0');
+
+// Dependency check
+$Core = Core::getInstance();
+$Core
+    ->check()
+    ->slimsVersion()
+    ->directoryPermission()
+    ->device()
+    ->result();
 
 // Render content based pathinfo
 $Http = Http::getInstance();

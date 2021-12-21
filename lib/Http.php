@@ -16,6 +16,8 @@ class Http
     private $body;
     private $HttpQuery;
     private $error;
+    public $client = null;
+
 
     private function __construct()
     {
@@ -79,6 +81,23 @@ class Http
     public function getError()
     {
         return $this->error;
+    }
+
+    public function client(string $clientName = 'guzzle')
+    {
+        switch (true) {
+            case (is_null($this->client) && $clientName == 'guzzle' && class_exists('\GuzzleHttp\Client') && function_exists('curl_init')):
+                $this->client = new Guzzle();
+                break;
+            case (is_null($this->client) && $clientName == 'curl' && function_exists('curl_init')):
+                $this->client = new Curl();
+                break;
+            default:
+                if (is_null($this->client)) $this->client = new Fetch();
+                break;
+        }
+
+        return $this->client;
     }
 
     public static function responseJson($mixData, $exit = true)

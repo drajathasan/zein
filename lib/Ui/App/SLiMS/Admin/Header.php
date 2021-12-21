@@ -27,6 +27,7 @@ class Header
     private static function dropDownMenu()
     {
         $Menus = [
+            [__('About Zein'), AWB . 'index.php/zein/about', 'mdi mdi-account'],
             [__('Template Settings'), AWB . 'index.php/zein/colorscheme', 'mdi mdi-cogs'],
             [__('Change User Profiles'), MWB.'system/app_user.php?changecurrent=true&action=detail', 'mdi mdi-account'],
             [__('Logout'), AWB . 'logout.php', 'mdi mdi-exit-to-app']
@@ -53,14 +54,14 @@ class Header
         }
 
         foreach ($Folder as $folder) {
-            if (is_writable(SB . $folder))
+            if (!is_writable(SB . $folder))
             {
                 $Message[] = ['url' => AWB.'index.php/zein/alert?type=write:' . $folder, 'message' => '<i class="mdi mdi-dots-hexagon"></i> Folder <strong>'.ucfirst($folder).'</strong> isn\'t writeable!'];
             }
         }
 
         // Extention
-        if (extension_loaded('gd'))
+        if (!extension_loaded('gd'))
         {
             $Message[] = ['url' => AWB.'index.php/zein/alert?type=ext:gd', 'message' => '<i class="mdi mdi-dots-hexagon"></i> Extention <strong>gd</strong> isn\'t writeable!'];
         }
