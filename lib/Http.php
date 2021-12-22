@@ -16,7 +16,7 @@ class Http
     private $body;
     private $HttpQuery;
     private $error;
-    public $client = null;
+    public $client = [];
 
 
     private function __construct()
@@ -85,19 +85,24 @@ class Http
 
     public function client(string $clientName = 'guzzle')
     {
-        switch (true) {
-            case (is_null($this->client) && $clientName == 'guzzle' && class_exists('\GuzzleHttp\Client') && function_exists('curl_init')):
-                $this->client = new Guzzle();
-                break;
-            case (is_null($this->client) && $clientName == 'curl' && function_exists('curl_init')):
-                $this->client = new Curl();
-                break;
-            default:
-                if (is_null($this->client)) $this->client = new Fetch();
-                break;
-        }
+        if (class_exists('\GuzzleHttp\Client')):
+            $this->client['guzzle'] = new Guzzle();
+            $Client = 'guzzle';
+        endif;
 
-        return $this->client;
+        if (function_exists('curl_init')):
+            $this->client['curl'] = new Curl();
+            $Client = 'curl';
+        endif;
+           
+        if (ini_get('allow_url_fopen') && class_exists('\Zein\Fetch')):
+            $this->client['fetch'] = new Fetch();
+            $Client = 'fetch';
+        endif;
+        
+        if (!count($this->client)) die('There is no available client, because curl extension or GuzzleHttp is\'t installe or allow_url_fopen is not on');
+
+        return $this->client[$clientName] ?? $this->client[$Client];
     }
 
     public static function responseJson($mixData, $exit = true)

@@ -40,6 +40,7 @@ $('.dropdown-menu').on('click', 'a.dropdown-item', function(e){
     $('.dashboard-stat, #transactionState, #collectionStat').remove();
 
     // modify container
+    container.removeAttr('style');
     container.removeClass('mainContentDashboard rounded');
     container.simbioAJAX($(this).attr('href'));
 });

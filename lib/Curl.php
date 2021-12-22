@@ -14,6 +14,7 @@ class Curl
 {
     private $Init = '';
     private $Result = [];
+    private $Response = '';
 
     public function __construct()
     {
@@ -38,13 +39,43 @@ class Curl
         return $this->Result;
     }
 
+    public function getHeader()
+    {
+        return substr($this->Response, 0, curl_getinfo($this->Init, CURLINFO_HEADER_SIZE));
+        
+    }
+
+    public function getContents()
+    {
+        return substr($this->Response, curl_getinfo($this->Init, CURLINFO_HEADER_SIZE));
+    }
+
+    public function getStatusCode()
+    {
+        return curl_getinfo($this->Init, CURLINFO_HTTP_CODE);
+    }
+
+    public function getGet(string $Url)
+    {
+        $Option = [
+            CURLOPT_URL => $Url,
+            CURLOPT_HEADER => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_USERAGENT => $_SERVER['HTTP_USER_AGENT']
+        ];
+
+        $this->setOption($Option)->exec();
+
+        return $this;
+    }
+
     public function download(string $Url, string $DestinationSavePath, int $Timeout = 300)
     {
         $Source = fopen($DestinationSavePath, 'w');
         $Option = [
             CURLOPT_URL => $Url,
             CURLOPT_FAILONERROR => true,
-            CURLOPT_HEADER => 0,
+            CURLOPT_HEADER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_AUTOREFERER => true,
             CURLOPT_BINARYTRANSFER => true,
@@ -54,7 +85,7 @@ class Curl
             CURLOPT_FILE => $Source
         ];
         
-        $this->setOption($Option)->exec()->close();
+        $this->setOption($Option)->exec();
 
         return $this;
     }
@@ -63,7 +94,12 @@ class Curl
     {
         $Prosess = curl_exec($this->Init);
         $Status = $Prosess ? true : false;
-        $this->Result = ['status' => $Status, 'error' => curl_error($this->Init)];
+        $this->Result = ['status' => $Status, 'client' => __CLASS__, 'error' => curl_error($this->Init)];
+
+        if ($Status)
+        {
+            $this->Response = $Prosess;
+        }
 
         return $this;
     }

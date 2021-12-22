@@ -10,13 +10,17 @@
 
 namespace Zein\Action;
 
+use Zein\Http;
+
 class Version
 {
     private static $Instance = null;
 
     private static function checkUpdate()
     {
+        $Http = Http::getInstance();
 
+        
     }
 
     public static function execute(array $Conf, array $Path)

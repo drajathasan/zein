@@ -19,12 +19,12 @@ class Test
     public function download()
     {
         $Http = Http::getInstance();
+        $Client = $Http->client();
+        $Download = $Http->client('curl')->getGet('https://api.github.com/');
 
-        $Download = $Http
-                    ->client('curl')
-                    ->download('https://github.com/drajathasan/slims-tarsius/archive/refs/heads/master.zip', SB . 'files/cache/tarsius-curl.zip');
-
-        zdd($Download->getResult());
+        zdd($Download->getContents(), false);
+        
+        //Http::responseJson($Download->getBody()->getContents());
     }
 
     public static function execute(array $Conf, array $Path)
