@@ -88,19 +88,17 @@ class Http
         if (class_exists('\GuzzleHttp\Client')):
             $this->client['guzzle'] = new Guzzle();
             $Client = 'guzzle';
-        endif;
 
-        if (function_exists('curl_init')):
+        elseif (function_exists('curl_init')):
             $this->client['curl'] = new Curl();
             $Client = 'curl';
-        endif;
-           
-        if (ini_get('allow_url_fopen') && class_exists('\Zein\Fetch')):
+
+        elseif (ini_get('allow_url_fopen') && class_exists('\Zein\Fetch')):
             $this->client['fetch'] = new Fetch();
             $Client = 'fetch';
         endif;
         
-        if (!count($this->client)) die('There is no available client, because curl extension or GuzzleHttp is\'t installe or allow_url_fopen is not on');
+        if (!count($this->client)) die('There is no available client, because curl extension or GuzzleHttp is\'t installed or allow_url_fopen is not on');
 
         return $this->client[$clientName] ?? $this->client[$Client];
     }

@@ -26,19 +26,29 @@ class Guzzle extends \GuzzleHttp\Client
         return $this;
     }
 
-    public function getGet($Url, array $Options = array())
+    public function pull($Url, array $Options = array())
     {
-        $this->Body = $this->get($Url, $Options)->getBody();
+        try {
+            $this->Body = $this->get($Url, $Options)->getBody();
+        } catch (\GuzzleHttp\Exception\ClientException $e) {
+            $this->Result = ['status' => false, 'client' => __CLASS__, 'error' => $e->getMessage()];
+        }
+
         return $this;
     }
 
     public function getContents()
     {
-        return $this->Body->getContents();
+        return is_object($this->Body) ? $this->Body->getContents() : $this;
     }
 
-    public function getResult()
+    public function getResult(string $Index = '')
     {
-        zdd($this->Result);
+        return $this->Result[$Index]??$this->Result;
+    }
+
+    public function close()
+    {
+        is_object($this->Body) ? $this->Body->close() : $this;
     }
 }

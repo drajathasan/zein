@@ -20,10 +20,10 @@ class Test
     {
         $Http = Http::getInstance();
         $Client = $Http->client();
-        $Download = $Http->client('curl')->getGet('https://api.github.com/');
-
-        zdd($Download->getContents(), false);
-        
+        $Download = $Client->pull('https://sia.ump.ac.id/quotes');
+        zdd($Client->getContents(), 0);
+        zdd($Client->getResult(), 0);
+        $Client->close();
         //Http::responseJson($Download->getBody()->getContents());
     }
 

@@ -14,9 +14,15 @@ class Curl
 {
     private $Init = '';
     private $Result = [];
+    private $Header = [];
     private $Response = '';
 
     public function __construct()
+    {
+        $this->Init();
+    }
+
+    private function Init()
     {
         $this->Init = curl_init();
     }
@@ -34,58 +40,92 @@ class Curl
         return $this;
     }
 
-    public function getResult()
-    {
-        return $this->Result;
-    }
-
-    public function getHeader()
-    {
-        return substr($this->Response, 0, curl_getinfo($this->Init, CURLINFO_HEADER_SIZE));
-        
-    }
-
-    public function getContents()
-    {
-        return substr($this->Response, curl_getinfo($this->Init, CURLINFO_HEADER_SIZE));
-    }
-
-    public function getStatusCode()
-    {
-        return curl_getinfo($this->Init, CURLINFO_HTTP_CODE);
-    }
-
-    public function getGet(string $Url)
+    public function check($Url)
     {
         $Option = [
             CURLOPT_URL => $Url,
             CURLOPT_HEADER => true,
+            CURLOPT_CUSTOMREQUEST => 'OPTIONS',
+            CURLOPT_FAILONERROR => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_USERAGENT => $_SERVER['HTTP_USER_AGENT']
         ];
 
         $this->setOption($Option)->exec();
+    }
+
+    public function getResult(string $Index = '')
+    {
+        return $this->Result[$Index]??$this->Result;
+    }
+
+    public function getHeader()
+    {
+        if (count($this->Header) === 0)
+        {
+            $this->Header = trim(substr($this->Response, 0, curl_getinfo($this->Init, CURLINFO_HEADER_SIZE)));
+        }
+        return $this->Header;
+    }
+
+    public function getContents()
+    {
+        return trim(substr($this->Response, curl_getinfo($this->Init, CURLINFO_HEADER_SIZE)));
+    }
+
+    public function getStatusCode()
+    {
+        $Code = curl_getinfo($this->Init, CURLINFO_HTTP_CODE);
+        $this->close();
+        return $Code;
+    }
+
+    public function pull(string $Url)
+    {
+        $this->check($Url);
+
+        if ($this->getResult('status'))
+        {
+            $this->Init();
+            $Option = [
+                CURLOPT_URL => $Url,
+                CURLOPT_HEADER => true,
+                CURLOPT_FAILONERROR => true,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_USERAGENT => $_SERVER['HTTP_USER_AGENT']
+            ];
+            $this->setOption($Option)->exec();
+        }
 
         return $this;
     }
 
     public function download(string $Url, string $DestinationSavePath, int $Timeout = 300)
     {
-        $Source = fopen($DestinationSavePath, 'w');
-        $Option = [
-            CURLOPT_URL => $Url,
-            CURLOPT_FAILONERROR => true,
-            CURLOPT_HEADER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_AUTOREFERER => true,
-            CURLOPT_BINARYTRANSFER => true,
-            CURLOPT_TIMEOUT => $Timeout,
-            CURLOPT_SSL_VERIFYHOST => 2,
-            CURLOPT_SSL_VERIFYPEER => 1,
-            CURLOPT_FILE => $Source
-        ];
-        
-        $this->setOption($Option)->exec();
+        $this->check($Url);
+
+        if ($this->getResult('status'))
+        {
+            $this->Init();
+            // Start to download
+            $Source = fopen($DestinationSavePath, 'w');
+            $Option = [
+                CURLOPT_URL => $Url,
+                CURLOPT_FAILONERROR => true,
+                CURLOPT_HEADER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_AUTOREFERER => true,
+                CURLOPT_BINARYTRANSFER => true,
+                CURLOPT_TIMEOUT => $Timeout,
+                CURLOPT_SSL_VERIFYHOST => 2,
+                CURLOPT_SSL_VERIFYPEER => 1,
+                CURLOPT_WRITEHEADER => fopen($DestinationSavePath . '-header', 'w'),
+                CURLOPT_FILE => $Source
+            ];
+            $this->setOption($Option)->exec();
+            $this->Header = explode("\n", file_get_contents($DestinationSavePath . '-header'));
+            unlink($DestinationSavePath . '-header');
+        }
 
         return $this;
     }
