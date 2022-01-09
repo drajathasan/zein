@@ -28,6 +28,8 @@ $Container->row()->col([
                     <p class="text-justify mt-3">
                         <strong>Zein</strong> merupakan template admin untuk SLiMS >= 9.4.0 yang terinspirasi dari template dashboard Argon. Apa yang anda lihat bukanlah hasil copy-paste template dengan mesin kloning seperti httrack melain kan rakitan dan dibuat dengan bantuan library CSS dari bootstrap bawaan SLiMS 9 dll, jadi ini tidak murni saya buat dari nol melainkan rakitan. Saya berharap anda dapat menikmati template ini dengan Bebas (Dikustom sesuai keinginan) dengan <strong>etika</strong> yang berlaku :).
                     </p>
+                    <div class="alertArea alert">
+                    </div>
                     <button class="btn btn-primary check-update"><i class="mdi mdi-checkbox-marked-circle-outline"></i> Check Update</button>
                     <button class="btn btn-secondary btn-wait d-none">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="d-inline-block" width="20" height="20" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -44,11 +46,11 @@ $Container->row()->col([
                     <img src="{$Background}" class="profile-bg"/>
                     <img src="{$ProfileImage}" class="rounded-circle w-25 shadow-lg profile-img"/>
                     <span class="imageCopyRight"> Photo by <a href="https://unsplash.com/@mak_flex?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Mak Flex</a> on <a href="https://unsplash.com/s/photos/forest-landscape?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a></span>
-                    <div class="mt-4 p-2 text-center ">
+                    <div class="mt-3 p-2 text-center ">
                         <h5 class="mt-5">Drajat Hasan</h5>
                         <span class="text-muted">Kang Ketik</span>
                     </div>
-                    <div class="mt-1 p-2 text-center d-flex">
+                    <div class="p-2 text-center d-flex">
                         <div class="p-2 flex-fill">
                             <a href="https://api.whatsapp.com/send/?phone=628973735575" class="notAJAX" target="_blank">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="d-block mx-auto" viewBox="0 0 16 16">
@@ -74,9 +76,6 @@ $Container->row()->col([
                             </a>
                         </div>
                     </div>
-                    <div class="text-center font-weight-bold">
-                        SLiMS Plugin Maker, GNU/Linux User
-                    </div>
                 </div>
             HTML]
     ]
@@ -92,8 +91,55 @@ echo $Container->create();
         $('.profile-img').attr('src', 'https://avatars.githubusercontent.com/u/38057222');
     }
 
-    $('.check-update').click(function(){
+    $('.check-update').click(async function(){
         $(this).addClass('d-none');
         $('.btn-wait').removeClass('d-none');
+
+        let currentVersion = '<?= ZEIN_VERSION ?>';
+        let alert = $('.alertArea');
+
+        try {
+            let Request = await fetch('index.php/zein/version/checkupdate');
+            let Response = await Request.json();
+
+            if (Response.status)
+            {
+                $('.btn-wait').addClass('d-none');
+
+                if (Response.data.lastVersion !== currentVersion)
+                {
+                    alert.addClass('alert-info');
+                    alert.html(`
+                        <h3>New Update Available</h3>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    Latest Version : <strong>${Response.data.lastVersion}</strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    Release Date : <strong>${Response.data.lastUpdateDate}</strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button class="btn btn-primary float-right">Install Last Version</button>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                }
+                else
+                {
+                    alert.addClass('alert-success');
+                    alert.html(`<h3>Zein in latest version</h3><p>So its Okay.</p>`);
+                }
+            }
+
+        } catch (error) {
+            alert.addClass('alert-danger');
+            alert.html(`<h3>Error</h3><p>${error}</p>`);
+        }
     });
 </script>

@@ -25,6 +25,7 @@ $Core
     ->check()
     ->slimsVersion()
     ->directoryPermission()
+    ->zipCheck()
     ->device()
     ->result();
 
@@ -86,8 +87,8 @@ $Html
     ->setLink(['href' => AWB . str_replace('style.css', 'css/materialdesignicons.min.css', $sysconf['admin_template']['css']), 'rel' => 'stylesheet', 'type' => 'text/css'])
     // Start minify
     ->setMinify(true)
-    ->setLink(['href' => $sysconf['admin_template']['css'], 'rel' => 'stylesheet', 'type' => 'text/css'])
-    ->setLink(['href' => str_replace('style.css', 'css/custom.css', $sysconf['admin_template']['css']), 'rel' => 'stylesheet', 'type' => 'text/css'])
+    ->setLink(['href' => $sysconf['admin_template']['css'].'?v=' . date('this'), 'rel' => 'stylesheet', 'type' => 'text/css'])
+    ->setLink(['href' => str_replace('style.css', 'css/custom.css?v=' . date('this'), $sysconf['admin_template']['css']), 'rel' => 'stylesheet', 'type' => 'text/css'])
     // End minify
     ->setMinify(false)
     ->setLink(['href' => AWB . 'admin_template/' . $sysconf['admin_template']['theme'] . '/css/tui-chart.min.css', 'rel' => 'stylesheet', 'type' => 'text/css']);

@@ -112,19 +112,19 @@ class Curl
             $Option = [
                 CURLOPT_URL => $Url,
                 CURLOPT_FAILONERROR => true,
-                CURLOPT_HEADER => true,
+                CURLOPT_HEADER => false,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_AUTOREFERER => true,
                 CURLOPT_BINARYTRANSFER => true,
                 CURLOPT_TIMEOUT => $Timeout,
                 CURLOPT_SSL_VERIFYHOST => 2,
                 CURLOPT_SSL_VERIFYPEER => 1,
-                CURLOPT_WRITEHEADER => fopen($DestinationSavePath . '-header', 'w'),
-                CURLOPT_FILE => $Source
+                CURLOPT_FILE => $Source,
+                CURLOPT_USERAGENT => $_SERVER['HTTP_USER_AGENT']
             ];
             $this->setOption($Option)->exec();
-            $this->Header = explode("\n", file_get_contents($DestinationSavePath . '-header'));
-            unlink($DestinationSavePath . '-header');
+            // $this->Header = explode("\n", file_get_contents($DestinationSavePath . '-header'));
+            // unlink($DestinationSavePath . '-header');
         }
 
         return $this;

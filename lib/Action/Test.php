@@ -19,7 +19,14 @@ class Test
     public function download()
     {
         $Http = Http::getInstance();
+
         $Client = $Http->client();
+
+        if (is_null($Client))
+        {
+            Http::responseJson(['status' => false, 'message' => $Http->getError()]);
+        }
+
         $Download = $Client->pull('https://sia.ump.ac.id/quotes');
         zdd($Client->getContents(), 0);
         zdd($Client->getResult(), 0);

@@ -9,13 +9,14 @@
  */
 
 namespace Zein\Action;
+use Zein\Http;
 use Zein\Ui\Html\{Element,Skeleton};
 use SLiMS\DB;
 
 class Config
 {
     private static $Instance = null;
-    private $Conf;
+    protected $Conf;
     private $Path;
 
     private function __construct(array $Conf)
@@ -42,10 +43,41 @@ class Config
         \utility::jsToastr('Data has been saved', 'Success', 'success');
     }
 
+    private function resetcolor()
+    {
+        $DefaultColor = 'a:2:{s:5:"theme";s:4:"zein";s:3:"css";s:29:"admin_template/zein/style.css";}';
+
+        DB::getInstance()
+            ->prepare('update `user` set `admin_template` = ? where user_id = ?')
+            ->execute([$DefaultColor, $_SESSION['uid']??0]);
+
+        Skeleton::removeCache();
+
+        Http::responseJson(['status' => true, 'message' => 'Data has been reseted']);
+    }
+
     public static function removecache()
     {
         // Remove cache
         Skeleton::removeCache();
+
+        if (Http::getMethod() === 'GET') Http::responseJson(['status' => true, 'message' => 'Data has been reseted']);
+    }
+
+    protected function getUserTemplate()
+    {
+        $DB = DB::getInstance();
+        $UserTemplate = $DB->prepare('select `admin_template` from `user` where user_id = ?');
+        $UserTemplate->execute([$_SESSION['uid']??0]);
+
+        return ($UserTemplate->rowCount() === 0) ? '?' : $UserTemplate->fetch(\PDO::FETCH_NUM)[0];
+    }
+
+    protected function updateTemplate(string $NewTemplate)
+    {
+        DB::getInstance()
+            ->prepare('update `user` set `admin_template` = ? where user_id = ?')
+            ->execute([$NewTemplate, $_SESSION['uid']??0]);
     }
 
     public static function execute(array $Conf, array $Path)

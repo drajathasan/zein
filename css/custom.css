@@ -386,7 +386,7 @@ div[data-stat="icon-available"] {
 
 .profile-img {
     position: absolute;
-    right: 12rem;
+    right: 42%;
     top: 13rem;
     border: 5px white solid;
 }
@@ -394,6 +394,6 @@ div[data-stat="icon-available"] {
 .imageCopyRight {
     display: block;
     position: absolute;
-    bottom: 32px;
+    bottom: 19px;
     left: 32px;
 }

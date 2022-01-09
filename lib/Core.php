@@ -10,6 +10,7 @@
 
 namespace Zein;
 
+use ZipArchive;
 use utility;
 use Zein\Ui\Components\Bs\Alert;
 
@@ -45,6 +46,16 @@ class Core
 
         // Version check
         if (SENAYAN_VERSION_TAG < '9.4.0') $this->throwError('Your SLiMS version is too old. Please upgrade to latest', 'slimsVersion');
+
+        return $this;
+    }
+
+    public function zipCheck()
+    {
+        // Failed chaining
+        if (!$this->issetCheck()) $this->throwError('Failed chaining!', 'chainingFailed');
+
+        if (!class_exists('ZipArchive')) $this->throwError('Zein need Zip extension. Please install it first!', 'zipExtension');
 
         return $this;
     }
