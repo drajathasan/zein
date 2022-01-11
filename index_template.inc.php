@@ -17,7 +17,7 @@ include __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/lib/helper.php';
 
 // Zein Version
-define('ZEIN_VERSION', '1.0.0-beta-2.0');
+define('ZEIN_VERSION', '1.0.0-beta-4.0');
 
 // Dependency check
 $Core = Core::getInstance();

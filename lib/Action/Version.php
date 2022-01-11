@@ -66,7 +66,7 @@ class Version extends Config
     {
         $versionCheck = $_SESSION['versionCheck']??[];
         if (!isset($versionCheck['nextCheck'])) Http::responseJson(['status' => false, 'message' => 'Please check update first!']);
-        
+
         $Http = Http::getInstance();
 
         $Client = $Http->client();
@@ -150,13 +150,16 @@ class Version extends Config
         // Archiving old data if latest version is not good enough
         $this->archivingOldVersion($oldVersion);
 
+        // Reset session
+        $_SESSION['versionCheck'] = [];
+
         // Success
         Http::responseJson(['status' => true, 'message' => 'Update succussfull.']);
     }
 
     private function archivingOldVersion(string $oldVersion)
     {
-        //rename(SB . 'admin' . DS . 'admin_template' . DS . $oldVersion, SB . 'admin' . DS . 'admin_template' . DS . 'zein-' . ZEIN_VERSION);
+        rename(SB . 'admin' . DS . 'admin_template' . DS . $oldVersion, SB . 'admin' . DS . 'admin_template' . DS . 'zein-' . ZEIN_VERSION);
         // rrmdir($this->Conf['admin_template']['theme']);
     }
 

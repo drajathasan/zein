@@ -124,7 +124,15 @@ echo $Container->create();
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <button class="btn btn-primary float-right">Install Last Version</button>
+                                    <button class="btn btn-primary installLatest float-right">Install Last Version</button>
+                                    <button class="btn btn-secondary btn-wait-upgrade d-none float-right">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="d-inline-block" width="20" height="20" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                                            <circle cx="50" cy="50" r="32" stroke-width="8" stroke="#e0e0e0" stroke-dasharray="50.26548245743669 50.26548245743669" fill="none" stroke-linecap="round">
+                                                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" keyTimes="0;1" values="0 50 50;360 50 50"></animateTransform>
+                                            </circle>
+                                        </svg> 
+                                        Please wait ....
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -140,6 +148,28 @@ echo $Container->create();
         } catch (error) {
             alert.addClass('alert-danger');
             alert.html(`<h3>Error</h3><p>${error}</p>`);
+        }
+    });
+
+    $('#mainContent').on('click', '.installLatest', async function(){
+        $(this).addClass('d-none');
+        $('.btn-wait-upgrade').removeClass('d-none');
+        try {
+            let Request = await fetch('index.php/zein/version/downloadlatest');
+            let Response = await Request.json();
+
+            console.log(Response);
+
+            if (Response.status)
+            {
+                top.toastr.success('Success', Response.message);
+                setTimeout(() => {
+                    window.location.href = 'index.php';
+                }, 2500);
+            }
+
+        } catch (error) {
+            top.toastr.error('Error', error.toString());
         }
     });
 </script>
