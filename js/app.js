@@ -208,6 +208,19 @@ $('#mainContent').on('click', 'input[name="updateData"]', function(e){
     }
 });
 
+$('#mainContent').on('click', '.setAdminTheme', async function(e){
+    e.preventDefault();
+    let Request = await fetch('index.php/zein/config/removecache');
+    let Response = await Request.json();
+
+    if (!Response.status)
+    {
+        alert('Failed remove cache!');
+    }
+
+    window.location.href = 'index.php';
+});
+
 $('#mainContent').on('change', '.custom-control-input', function(e){
     fetch('index.php/zein/config/removecache');
 });

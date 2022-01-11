@@ -56,7 +56,7 @@ class Http
         return $WebPath;
     }
 
-    public function getMethod()
+    public static function getMethod()
     {
         return $_SERVER['REQUEST_METHOD'];
     }

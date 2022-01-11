@@ -12,6 +12,8 @@ namespace Zein\Action;
 
 use ZipArchive;
 use Zein\Http;
+use Zein\Ui\Tool;
+use Zein\Ui\Html\Skeleton;
 
 class Version extends Config
 {
@@ -90,6 +92,9 @@ class Version extends Config
     {
         if (!self::$Instance->hasDownload) Http::responseJson(['status' => false, 'message' => 'Please download first.']);
 
+        Skeleton::removeCache();
+
+        // unziping latest version
         $Zip = new ZipArchive;
         $Dest = SB . 'admin/admin_template/';
 
@@ -120,21 +125,38 @@ class Version extends Config
         // set new template data
         $TemplateData = unserialize($this->getUserTemplate());
 
+        // old version
+        $oldVersion = (string)$TemplateData['theme'];
+
+        // setup new data
         $TemplateData['theme'] = 'zein-' . $_SESSION['versionCheck']['result']['data']['lastVersion'];
+        $TemplateData['css'] = str_replace('zein', 'zein-' . $_SESSION['versionCheck']['result']['data']['lastVersion'], $TemplateData['css']);
+
+        // set minify files
+        $Path = SB . 'admin' . DS . 'admin_template' . DS . $TemplateData['theme'];
+        $filesToMinify = [
+            [$Path, 'style.css'],
+            [$Path . DS . 'css', 'custom.css'],
+            [$Path . DS . 'js', 'app.js']
+        ];
+
+        foreach ($filesToMinify as $file) {
+            Tool::minify($file[0], $file[1]);
+        }
 
         // update database
         $this->updateTemplate(serialize($TemplateData));
 
         // Archiving old data if latest version is not good enough
-        $this->archivingOldVersion();
+        $this->archivingOldVersion($oldVersion);
 
         // Success
         Http::responseJson(['status' => true, 'message' => 'Update succussfull.']);
     }
 
-    private function archivingOldVersion()
+    private function archivingOldVersion(string $oldVersion)
     {
-        rename($this->Conf['admin_template']['theme'], 'zein-' . ZEIN_VERSION);
+        rename(SB . 'admin' . DS . 'admin_template' . DS . $oldVersion, SB . 'admin' . DS . 'admin_template' . DS . 'zein-' . ZEIN_VERSION);
         // rrmdir($this->Conf['admin_template']['theme']);
     }
 

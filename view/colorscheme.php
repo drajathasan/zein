@@ -75,7 +75,7 @@ echo $HorizontalForm->setSubmitButton()->create();
                 }, 2500);
             }
         } catch (error) {
-            toastr.error(error, 'Error');
+            toastr.error(error.toString(), 'Error');
         }
 
     })
