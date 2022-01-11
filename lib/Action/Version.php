@@ -130,7 +130,7 @@ class Version extends Config
 
         // setup new data
         $TemplateData['theme'] = 'zein-' . $_SESSION['versionCheck']['result']['data']['lastVersion'];
-        $TemplateData['css'] = str_replace('zein', 'zein-' . $_SESSION['versionCheck']['result']['data']['lastVersion'], $TemplateData['css']);
+        $TemplateData['css'] = 'admin_template/zein-' . $_SESSION['versionCheck']['result']['data']['lastVersion'] .'/style.css';
 
         // set minify files
         $Path = SB . 'admin' . DS . 'admin_template' . DS . $TemplateData['theme'];
@@ -156,7 +156,7 @@ class Version extends Config
 
     private function archivingOldVersion(string $oldVersion)
     {
-        rename(SB . 'admin' . DS . 'admin_template' . DS . $oldVersion, SB . 'admin' . DS . 'admin_template' . DS . 'zein-' . ZEIN_VERSION);
+        //rename(SB . 'admin' . DS . 'admin_template' . DS . $oldVersion, SB . 'admin' . DS . 'admin_template' . DS . 'zein-' . ZEIN_VERSION);
         // rrmdir($this->Conf['admin_template']['theme']);
     }
 
