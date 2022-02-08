@@ -66,7 +66,7 @@ class Skeleton
         {
             $ModifiedAttribute = $Attribute;
             Tool::minify(dirname(str_replace(AWB, SB . 'admin' . DS, $ModifiedAttribute['href'])), basename($ModifiedAttribute['href']));
-            $Attribute['href'] = str_replace('.css', '.min.css', $Attribute['href']);
+            $Attribute['href'] = str_replace('.css', '.min.css', $Attribute['href']) . '?v=' . date('this');
         }
 
         Element::$Close = false;
